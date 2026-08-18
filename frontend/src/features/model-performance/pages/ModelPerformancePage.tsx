@@ -176,8 +176,13 @@ const ModelPerformancePage = () => {
                 alignItems: "center",
                 justifyContent: "center",
 
-                bgcolor:
-                  "rgba(0,84,166,0.1)",
+                bgcolor: (t) =>
+                  alpha(
+                    t.palette.primary.main,
+                    t.palette.mode === "dark"
+                      ? 0.2
+                      : 0.1
+                  ),
 
                 color:
                   "primary.main",
