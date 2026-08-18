@@ -204,7 +204,7 @@ const ForecastResults = ({
           borderColor:
             "divider",
 
-          borderRadius: 4,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -244,7 +244,7 @@ const ForecastResults = ({
           borderColor:
             "divider",
 
-          borderRadius: 4,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -286,7 +286,7 @@ const ForecastResults = ({
           borderColor:
             "divider",
 
-          borderRadius: 4,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -334,7 +334,7 @@ const ForecastResults = ({
         borderColor:
           "divider",
 
-        borderRadius: 4,
+        borderRadius: "12px",
 
         p: {
           xs: 2.5,

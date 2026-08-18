@@ -196,7 +196,7 @@ const ForecastTable = () => {
       elevation={0}
       sx={{
         p:4,
-        borderRadius:4,
+        borderRadius: "12px",
         border:"1px solid",
         borderColor:"divider",
       }}

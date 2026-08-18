@@ -128,7 +128,7 @@ const DashboardSidebar = ({
                 component={NavLink}
                 to={item.path}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: "10px",
                   mb: 0.75,
                   py: collapsed ? 1.4 : 1.25,
                   px: collapsed ? 1.25 : 1.75,
@@ -147,7 +147,7 @@ const DashboardSidebar = ({
                       top: "22%",
                       bottom: "22%",
                       width: 4,
-                      borderRadius: 4,
+                      borderRadius: "12px",
                       bgcolor: "#1890d7",
                     },
                   },
@@ -181,7 +181,7 @@ const DashboardSidebar = ({
       {/* Footer */}
       {/* <Box sx={{ p: collapsed ? 1.25 : 2 }}>
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <SettingsRounded fontSize="small" />
@@ -190,7 +190,7 @@ const DashboardSidebar = ({
         </ListItemButton>
 
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <SupportAgentRounded fontSize="small" />
@@ -199,7 +199,7 @@ const DashboardSidebar = ({
         </ListItemButton>
 
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <LogoutRounded fontSize="small" />

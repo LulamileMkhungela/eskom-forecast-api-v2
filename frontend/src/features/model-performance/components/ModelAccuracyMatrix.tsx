@@ -319,7 +319,9 @@ const ModelAccuracyMatrix = ({
     {
       target: "Stockpile",
       label: "Stockpile",
-      color: isDark ? "#FFD25E" : "#F59E0B",
+      /* amber text on the light amber tint needs to be darker to stay
+         readable (the bright #F59E0B only scored 2:1) */
+      color: isDark ? "#FFD25E" : "#B45309",
       lightColor: isDark
         ? alpha("#F5BC2C", 0.14)
         : "#FFF7E8",
@@ -538,7 +540,7 @@ const ModelAccuracyMatrix = ({
             sx={{
               width: 48,
               height: 48,
-              borderRadius: 3,
+              borderRadius: "12px",
               bgcolor: infoTint,
               color: selectedInk,
               display: "flex",
@@ -589,7 +591,7 @@ const ModelAccuracyMatrix = ({
             color: softText,
             border: `1px solid ${softBorderColor(theme)}`,
             fontWeight: 700,
-            borderRadius: 2,
+            borderRadius: "10px",
           }}
         />
       </Stack>
@@ -628,7 +630,7 @@ const ModelAccuracyMatrix = ({
                   ? "transparent"
                   : config.lightColor,
 
-                borderRadius: 3,
+                borderRadius: "12px",
 
                 px: 2,
 
@@ -713,7 +715,7 @@ const ModelAccuracyMatrix = ({
           border: "1px solid",
           borderColor: "divider",
 
-          borderRadius: 3,
+          borderRadius: "12px",
 
           "&::-webkit-scrollbar":
             {
@@ -726,7 +728,7 @@ const ModelAccuracyMatrix = ({
                 ? "rgba(255,255,255,0.28)"
                 : "#CBD5E1",
 
-              borderRadius: 10,
+              borderRadius: "12px",
             },
         }}
       >
@@ -1244,7 +1246,7 @@ const ModelAccuracyMatrix = ({
           mt: 2.5,
           p: 2,
 
-          borderRadius: 2.5,
+          borderRadius: "12px",
 
           bgcolor: "transparent",
 

@@ -470,7 +470,7 @@ const StockpileTrajectory = ({
           sx={{
             flexShrink: 0,
             p: 0.5,
-            borderRadius: 2,
+            borderRadius: "10px",
             bgcolor: "action.hover",
             border: "1px solid",
             borderColor: "divider",
@@ -501,7 +501,7 @@ const StockpileTrajectory = ({
             }
             sx={{
               minWidth: 72,
-              borderRadius: 1.5,
+              borderRadius: "10px",
               textTransform: "none",
               fontWeight: 800,
             }}
@@ -522,7 +522,7 @@ const StockpileTrajectory = ({
             }
             sx={{
               minWidth: 116,
-              borderRadius: 1.5,
+              borderRadius: "10px",
               textTransform: "none",
               fontWeight: 800,
             }}
@@ -544,7 +544,7 @@ const StockpileTrajectory = ({
               gap: 1,
               px: 1.5,
               py: 1,
-              borderRadius: 2,
+              borderRadius: "10px",
               backgroundColor:
                 "rgba(245, 124, 0, 0.08)",
               border:
@@ -696,7 +696,7 @@ const StockpileTrajectory = ({
                   }}
                   axisLine={false}
                   tickLine={false}
-                  width={55}
+                  width={72}
                   tickFormatter={(value: number) =>
                     formatNumber(value)
                   }

@@ -298,7 +298,7 @@ const WeatherOutlook = ({
 
           borderColor: cardBorderColor,
 
-          borderRadius: 4,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -339,7 +339,7 @@ const WeatherOutlook = ({
 
           borderColor: cardBorderColor,
 
-          borderRadius: 4,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -385,7 +385,7 @@ const WeatherOutlook = ({
 
         borderColor: cardBorderColor,
 
-        borderRadius: 4,
+        borderRadius: "12px",
 
         p: {
           xs: 2.5,
@@ -501,7 +501,7 @@ const WeatherOutlook = ({
         <Box
           sx={{
             p: 2.5,
-            borderRadius: 3,
+            borderRadius: "12px",
             bgcolor:
               "rgba(245, 124, 0, 0.07)",
             border:
@@ -552,7 +552,7 @@ const WeatherOutlook = ({
         <Box
           sx={{
             p: 2.5,
-            borderRadius: 3,
+            borderRadius: "12px",
             bgcolor:
               "rgba(18, 100, 255, 0.07)",
             border:
@@ -603,7 +603,7 @@ const WeatherOutlook = ({
         <Box
           sx={{
             p: 2.5,
-            borderRadius: 3,
+            borderRadius: "12px",
             bgcolor:
               "rgba(46, 125, 50, 0.07)",
             border:
@@ -654,7 +654,7 @@ const WeatherOutlook = ({
         <Box
           sx={{
             p: 2.5,
-            borderRadius: 3,
+            borderRadius: "12px",
             bgcolor:
               "rgba(69, 90, 100, 0.07)",
             border:

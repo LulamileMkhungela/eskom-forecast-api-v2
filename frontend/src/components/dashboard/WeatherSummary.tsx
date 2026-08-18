@@ -92,7 +92,7 @@ const WeatherSummary = () => {
         sx={{
           mt: 3,
           p: 2,
-          borderRadius: 3,
+          borderRadius: "12px",
           bgcolor: "grey.100",
         }}
       >

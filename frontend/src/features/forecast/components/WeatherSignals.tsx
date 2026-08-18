@@ -57,7 +57,7 @@ const WeatherSignals = ({
           p: 4,
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
         }}
       >
         <Typography
@@ -80,7 +80,7 @@ const WeatherSignals = ({
           p: 4,
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
         }}
       >
         <Typography color="error">
@@ -115,7 +115,7 @@ const WeatherSignals = ({
       sx={{
         bgcolor: "transparent",
         border: softBorder,
-        borderRadius: 4,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           md: 4,
@@ -239,7 +239,7 @@ const WeatherSignals = ({
         sx={{
           mt: 3,
           p: 2.5,
-          borderRadius: 3,
+          borderRadius: "12px",
           bgcolor: neutralFill,
           border: softBorder,
         }}
@@ -350,7 +350,7 @@ const Signal = ({
     <Box
       sx={{
         p: 2.5,
-        borderRadius: 3,
+        borderRadius: "12px",
         bgcolor: background,
         minWidth: 0,
         height: "100%",
@@ -371,7 +371,7 @@ const Signal = ({
           sx={{
             width: 42,
             height: 42,
-            borderRadius: 2,
+            borderRadius: "10px",
             bgcolor:
               "rgba(255,255,255,0.75)",
             color,

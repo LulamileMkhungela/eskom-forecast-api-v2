@@ -288,7 +288,7 @@ const ForecastTrend = () => {
                           bgcolor:
                             "background.paper",
                           p: 2,
-                          borderRadius: 2,
+                          borderRadius: "10px",
                           boxShadow: 4,
                         }}
                       >

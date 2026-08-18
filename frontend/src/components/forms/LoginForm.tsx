@@ -199,7 +199,7 @@ const LoginForm = () => {
 
                 height:58,
 
-                borderRadius:3,
+                borderRadius: "12px",
 
                 bgcolor:"#FAFBFC",
 
@@ -261,7 +261,7 @@ const LoginForm = () => {
 
                 height:58,
 
-                borderRadius:3,
+                borderRadius: "12px",
 
                 bgcolor:"#FAFBFC",
 

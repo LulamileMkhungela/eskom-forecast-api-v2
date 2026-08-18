@@ -468,7 +468,7 @@ const OotPerformanceChart = ({
               width: 44,
               height: 44,
 
-              borderRadius: 3,
+              borderRadius: "12px",
 
               bgcolor: infoTint,
 
@@ -532,7 +532,7 @@ const OotPerformanceChart = ({
               px: 1.5,
               py: 0.75,
 
-              borderRadius: 2,
+              borderRadius: "10px",
 
               bgcolor: raisedFill,
 
@@ -557,7 +557,7 @@ const OotPerformanceChart = ({
               px: 1.5,
               py: 0.75,
 
-              borderRadius: 2,
+              borderRadius: "10px",
 
               bgcolor: infoTint,
 

@@ -15,7 +15,7 @@ const LoginButton = ({
       disabled={loading}
       sx={{
         height: 56,
-        borderRadius: 3,
+        borderRadius: "12px",
         fontSize: 16,
         fontWeight: 700,
         textTransform: "none",

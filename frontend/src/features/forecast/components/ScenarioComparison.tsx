@@ -4,6 +4,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTheme } from "@mui/material/styles";
+
 import {
   CompareArrowsRounded,
   TrendingUpRounded,
@@ -62,6 +64,11 @@ const scenarioLabels: Record<
   weather_cold_wet: "Cold & Wet",
 };
 
+/*
+ * Series colours. The light-mode variants are darkened so the value
+ * text drawn in the same colour stays readable on a white card
+ * (#F57C00 scored only 2.7:1).
+ */
 const scenarioColors: Record<
   string,
   string
@@ -229,11 +236,24 @@ const ScenarioComparison = ({
     ] ??
     "Selected Scenario";
 
+  const theme = useTheme();
+
+  const isDarkMode =
+    theme.palette.mode === "dark";
+
   const selectedScenarioColor =
     scenarioColors[
       selectedScenarioId
     ] ??
     "#F57C00";
+
+  /* Same hue, but dark enough to read as text on a light surface. */
+  const selectedScenarioInk =
+    isDarkMode
+      ? selectedScenarioColor
+      : selectedScenarioId === "actual"
+        ? "#C45F00"
+        : selectedScenarioColor;
 
   const source: ForecastRecord[] =
     data
@@ -453,7 +473,7 @@ const ScenarioComparison = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 3.5,
@@ -494,7 +514,7 @@ const ScenarioComparison = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 3.5,
@@ -520,7 +540,7 @@ const ScenarioComparison = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 3.5,
@@ -564,7 +584,7 @@ const ScenarioComparison = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 3,
+            borderRadius: "12px",
             p: 2.5,
           }}
         >
@@ -624,7 +644,7 @@ const ScenarioComparison = ({
             sx={{
               width: 44,
               height: 44,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor:
                 "rgba(18,100,255,0.08)",
               display: "flex",
@@ -673,7 +693,7 @@ const ScenarioComparison = ({
           sx={{
             px: 2,
             py: 1.25,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             border: softBorder,
             bgcolor: infoTint,
             minWidth: 110,
@@ -714,7 +734,7 @@ const ScenarioComparison = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 3,
+            borderRadius: "12px",
             p: 2,
           }}
         >
@@ -748,7 +768,7 @@ const ScenarioComparison = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 3,
+            borderRadius: "12px",
             p: 2,
           }}
         >
@@ -766,7 +786,7 @@ const ScenarioComparison = ({
             fontSize={23}
             fontWeight={800}
             color={
-              selectedScenarioColor
+              selectedScenarioInk
             }
           >
             {formatNumber(
@@ -785,7 +805,7 @@ const ScenarioComparison = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 3,
+            borderRadius: "12px",
             p: 2,
           }}
         >
@@ -940,7 +960,9 @@ const ScenarioComparison = ({
               tickFormatter={
                 formatNumber
               }
-              width={55}
+              /* wide enough that thousands separators never wrap
+                 onto a second line ("32\n000") */
+              width={72}
             />
 
             <Tooltip
@@ -1069,7 +1091,7 @@ const ScenarioComparison = ({
             fontSize={20}
             fontWeight={800}
             color={
-              selectedScenarioColor
+              selectedScenarioInk
             }
             mt={0.4}
           >

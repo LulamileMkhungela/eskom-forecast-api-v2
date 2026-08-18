@@ -124,7 +124,7 @@ const ForecastTooltip = ({
       sx={{
         bgcolor: "transparent",
         border: softBorder,
-        borderRadius: 2.5,
+        borderRadius: "12px",
         px: 2,
         py: 1.5,
         boxShadow:
@@ -439,7 +439,7 @@ const ForecastTrendChart = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 3.5,
@@ -458,7 +458,7 @@ const ForecastTrendChart = ({
             sx={{
               width: 44,
               height: 44,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor:
                 "rgba(18,100,255,0.08)",
               display: "flex",
@@ -519,7 +519,7 @@ const ForecastTrendChart = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           minHeight: 520,
           display: "flex",
           alignItems: "center",
@@ -633,7 +633,7 @@ const ForecastTrendChart = ({
               sx={{
                 width: 46,
                 height: 46,
-                borderRadius: 2.5,
+                borderRadius: "12px",
                 bgcolor:
                   "rgba(18,100,255,0.08)",
                 display: "flex",
@@ -707,7 +707,7 @@ const ForecastTrendChart = ({
                 gap: 0.75,
                 px: 1.25,
                 py: 0.75,
-                borderRadius: 2,
+                borderRadius: "10px",
                 bgcolor:
                   "rgba(18,100,255,0.06)",
                 border:
@@ -741,7 +741,7 @@ const ForecastTrendChart = ({
               sx={{
                 px: 1.25,
                 py: 0.75,
-                borderRadius: 2,
+                borderRadius: "10px",
                 bgcolor:
                   "rgba(46,125,50,0.07)",
                 border:
@@ -796,7 +796,7 @@ const ForecastTrendChart = ({
           sx={{
             px: 1.75,
             py: 1.5,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             bgcolor: neutralFill,
           }}
         >
@@ -846,7 +846,7 @@ const ForecastTrendChart = ({
           sx={{
             px: 1.75,
             py: 1.5,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             bgcolor: neutralFill,
           }}
         >
@@ -896,7 +896,7 @@ const ForecastTrendChart = ({
           sx={{
             px: 1.75,
             py: 1.5,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             bgcolor: neutralFill,
           }}
         >
@@ -955,7 +955,7 @@ const ForecastTrendChart = ({
           sx={{
             px: 1.75,
             py: 1.5,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             bgcolor: neutralFill,
           }}
         >
@@ -1174,7 +1174,7 @@ const ForecastTrendChart = ({
               }}
               axisLine={false}
               tickLine={false}
-              width={58}
+              width={72}
               tickFormatter={(
                 value: number
               ) =>

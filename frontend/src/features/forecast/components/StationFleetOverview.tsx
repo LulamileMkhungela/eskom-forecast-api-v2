@@ -147,7 +147,7 @@ const StationFleetOverview = () => {
                         top: 8,
                         bottom: 8,
                         width: 3,
-                        borderRadius: 3,
+                        borderRadius: "12px",
                         bgcolor: "primary.main",
                       }
                     : undefined,
@@ -210,7 +210,7 @@ const StationFleetOverview = () => {
                   color={metric === "supply" ? "secondary" : "primary"}
                   sx={{
                     height: 6,
-                    borderRadius: 3,
+                    borderRadius: "12px",
                     bgcolor: (t) =>
                       t.palette.mode === "dark"
                         ? "rgba(255,255,255,0.14)"

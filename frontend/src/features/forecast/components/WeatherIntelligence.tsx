@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 
 import {
+  GrainRounded,
+  WbTwilightRounded,
   AirRounded,
   CloudRounded,
   OpacityRounded,
@@ -452,7 +454,7 @@ const WeatherIntelligence = ({
               sx={{
                 width: 48,
                 height: 48,
-                borderRadius: 2,
+                borderRadius: "10px",
                 bgcolor: infoTint,
                 color:
                   "#1264FF",
@@ -834,8 +836,9 @@ const CurrentWeather = ({
       value: `${formatNumber(
         current.rainfall
       )} mm`,
+      /* rain drops — distinct from the humidity water drop */
       icon:
-        <OpacityRounded />,
+        <GrainRounded />,
     },
     {
       label: "Cloud Cover",
@@ -877,8 +880,9 @@ const CurrentWeather = ({
       value: `${formatNumber(
         current.sunshine
       )} hrs`,
+      /* sunshine hours — distinct from the UV index sun */
       icon:
-        <WbSunnyRounded />,
+        <WbTwilightRounded />,
     },
   ];
 
@@ -931,7 +935,7 @@ const CurrentWeather = ({
               px: 2,
               py: 1.25,
               bgcolor: infoTint,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               color:
                 "text.primary",
               fontWeight: 800,
@@ -950,7 +954,7 @@ const CurrentWeather = ({
               px: 2,
               py: 1.25,
               bgcolor: neutralFill,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               color: softText,
               fontWeight: 700,
             }}
@@ -1116,7 +1120,7 @@ const WeatherOutlookGrid = ({
               }
               sx={{
                 p: 2,
-                borderRadius: 3,
+                borderRadius: "12px",
                 bgcolor: neutralFill,
                 border: softBorder,
                 minWidth: 0,
@@ -1194,8 +1198,9 @@ const WeatherOutlookGrid = ({
                 <Box
                   component="span"
                   sx={{
-                    color:
-                      "#8995A7",
+                    /* readable in both themes (the old #8995A7 only
+                       reached 2.9:1 on the light surface) */
+                    color: softText,
                     fontWeight: 600,
                     fontSize:
                       "0.85rem",
@@ -1329,7 +1334,7 @@ const WeatherSignals = ({
         signals.totalRainfall
       )} mm`,
       icon:
-        <OpacityRounded />,
+        <GrainRounded />,
       color:
         "#1683D8",
       bg: infoTint,
@@ -1407,7 +1412,7 @@ const WeatherSignals = ({
               }
               sx={{
                 p: 2.5,
-                borderRadius: 3,
+                borderRadius: "12px",
                 bgcolor:
                   item.bg,
                 border: softBorder,
@@ -1425,7 +1430,7 @@ const WeatherSignals = ({
                   sx={{
                     width: 42,
                     height: 42,
-                    borderRadius: 2,
+                    borderRadius: "10px",
                     bgcolor: (t) =>
                       t.palette.mode === "dark"
                         ? "rgba(255,255,255,0.10)"
@@ -1542,7 +1547,7 @@ const MiniSignal = ({
         p: 2,
         bgcolor: neutralFill,
         border: softBorder,
-        borderRadius: 3,
+        borderRadius: "12px",
       }}
     >
 
@@ -1586,7 +1591,7 @@ const WeatherMetric = ({
     <Box
       sx={{
         p: 2,
-        borderRadius: 2,
+        borderRadius: "10px",
         bgcolor: neutralFill,
         border: softBorder,
         minWidth: 0,
@@ -1607,7 +1612,7 @@ const WeatherMetric = ({
           sx={{
             width: 38,
             height: 38,
-            borderRadius: 1.5,
+            borderRadius: "10px",
             bgcolor: "transparent",
             color:
               "#1264FF",

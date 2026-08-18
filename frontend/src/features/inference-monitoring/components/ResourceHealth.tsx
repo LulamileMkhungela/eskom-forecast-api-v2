@@ -240,7 +240,7 @@ const ResourceHealth = ({
   return (
     <Card
       sx={{
-        borderRadius: 3,
+        borderRadius: "12px",
         height: "100%",
       }}
     >
@@ -403,7 +403,7 @@ const ResourceHealth = ({
                         sx={{
                           width: 40,
                           height: 40,
-                          borderRadius: 2,
+                          borderRadius: "10px",
                           display: "flex",
                           alignItems:
                             "center",

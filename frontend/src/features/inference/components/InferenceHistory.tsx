@@ -21,6 +21,12 @@ import CardHeader from "../../../components/common/CardHeader";
 import FilterBar, { FilterConfig } from "../../../components/common/FilterBar";
 import ViewSwitcher, { ViewMode } from "../../../components/common/ViewSwitcher";
 
+/**
+ * DEMO DATA — the run history below is placeholder content for the
+ * inference page. Station names here are examples only; the real
+ * power-station list always comes from the backend.
+ */
+
 
 
 interface InferenceRun {
@@ -108,12 +114,13 @@ const filterConfigs: FilterConfig[] = [
   {
     name: "station",
     label: "Station",
-    options: [
-      { label: "Arnot", value: "Arnot" },
-      { label: "Kendal", value: "Kendal" },
-      { label: "Medupi", value: "Medupi" },
-      { label: "Tutuka", value: "Tutuka" },
-    ],
+    /*
+     * Derived from the run history itself rather than a hard-coded
+     * list, so the filter always matches the data on screen.
+     */
+    options: Array.from(
+      new Set(history.map((run) => run.station))
+    ).map((station) => ({ label: station, value: station })),
   },
 ];
 

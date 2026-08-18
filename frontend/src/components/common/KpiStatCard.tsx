@@ -111,31 +111,35 @@ const KpiStatCard = ({
         },
       }}
     >
-      {/* accent glow */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: -30,
-          right: -30,
-          width: 110,
-          height: 110,
-          borderRadius: "50%",
-          bgcolor: alpha(color, 0.1),
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* HEADER — label block + icon tile, aligned to the same top edge */}
+      {/* HEADER — icon tile on the LEFT, label block beside it.
+          Identical on the Forecast KPIs and the Model Performance
+          KPIs so the two rows line up exactly. */}
       <Box
         sx={{
           display: "flex",
           alignItems: "flex-start",
-          justifyContent: "space-between",
           gap: 1.5,
           minWidth: 0,
         }}
       >
-        <Box sx={{ minWidth: 0 }}>
+        <Box
+          sx={{
+            width: 46,
+            height: 46,
+            borderRadius: "12px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            bgcolor: (t) =>
+              alpha(color, t.palette.mode === "dark" ? 0.2 : 0.1),
+            color,
+          }}
+        >
+          {icon}
+        </Box>
+
+        <Box sx={{ minWidth: 0, pt: 0.25 }}>
           <Typography
             sx={{
               fontSize: 11,
@@ -152,7 +156,7 @@ const KpiStatCard = ({
           {subtitle && (
             <Typography
               sx={{
-                mt: 0.5,
+                mt: 0.25,
                 fontSize: 12,
                 color: "text.secondary",
                 lineHeight: 1.4,
@@ -161,23 +165,6 @@ const KpiStatCard = ({
               {subtitle}
             </Typography>
           )}
-        </Box>
-
-        <Box
-          sx={{
-            width: 46,
-            height: 46,
-            borderRadius: "14px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            bgcolor: (t) =>
-              alpha(color, t.palette.mode === "dark" ? 0.2 : 0.1),
-            color,
-          }}
-        >
-          {icon}
         </Box>
       </Box>
 
@@ -240,10 +227,13 @@ const KpiStatCard = ({
           <Box
             sx={{
               mt: 1.5,
+              /* same height as the sparkline slot, so every value in a
+                 KPI row sits on exactly the same baseline */
+              height: 36,
               display: "inline-flex",
               alignItems: "center",
               px: 1.25,
-              py: 0.5,
+              alignSelf: "flex-start",
               borderRadius: "999px",
               bgcolor: "transparent",
               border: "1px solid",

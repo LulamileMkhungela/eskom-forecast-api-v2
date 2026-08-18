@@ -16,6 +16,7 @@ import {
 
 import {
   CloudRounded,
+  ScatterPlotRounded,
   InfoOutlined,
 } from "@mui/icons-material";
 
@@ -885,7 +886,7 @@ const forecastDates =
               sx={{
                 width: 42,
                 height: 42,
-                borderRadius: 2,
+                borderRadius: "10px",
                 display: "flex",
                 alignItems:
                   "center",
@@ -896,7 +897,7 @@ const forecastDates =
               }}
             >
 
-              <CloudRounded />
+              <ScatterPlotRounded />
 
             </Box>
 
@@ -1077,7 +1078,10 @@ const forecastDates =
 
             <Box
               sx={{
-                minWidth: 760,
+                /* 150px label column + 7 x 92px value columns + gaps.
+                   Declared so the wrapper above scrolls when the card
+                   is narrower, instead of the grid escaping the card. */
+                minWidth: 850,
               }}
             >
 
@@ -1175,7 +1179,7 @@ const forecastDates =
                           alignItems:
                             "center",
                           px: 1.5,
-                          borderRadius: 2,
+                          borderRadius: "10px",
                           bgcolor:
                             "action.hover",
                         }}
@@ -1216,7 +1220,7 @@ const forecastDates =
                               justifyContent:
                                 "center",
 
-                              borderRadius: 2,
+                              borderRadius: "10px",
 
                               bgcolor:
                                 getCellBackground(
@@ -1293,7 +1297,7 @@ const forecastDates =
                     sx={{
                       width: 12,
                       height: 12,
-                      borderRadius: 1,
+                      borderRadius: "8px",
                       bgcolor:
                         "rgba(25,118,210,0.25)",
                     }}
@@ -1319,7 +1323,7 @@ const forecastDates =
                     sx={{
                       width: 12,
                       height: 12,
-                      borderRadius: 1,
+                      borderRadius: "8px",
                       bgcolor:
                         "rgba(211,47,47,0.25)",
                     }}

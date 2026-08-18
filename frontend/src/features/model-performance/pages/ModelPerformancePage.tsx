@@ -170,7 +170,7 @@ const ModelPerformancePage = () => {
               sx={{
                 width: 44,
                 height: 44,
-                borderRadius: 2.5,
+                borderRadius: "12px",
 
                 display: "flex",
                 alignItems: "center",

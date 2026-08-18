@@ -5,6 +5,12 @@ import {
 } from "@mui/icons-material";
 
 import {
+
+/**
+ * DEMO DATA — this component is not mounted by any route. The rows
+ * below are placeholder examples, NOT the real power-station list
+ * (that always comes from the backend via useForecastEntities).
+ */
   Avatar,
   Box,
   Chip,
@@ -75,7 +81,7 @@ const ForecastHistory = () => {
       elevation={0}
       sx={{
         p: 4,
-        borderRadius: 4,
+        borderRadius: "12px",
         border: "1px solid",
         borderColor: "divider",
       }}

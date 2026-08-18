@@ -53,7 +53,7 @@ const WeatherMetric = ({
           xs: 2,
           md: 2.5,
         },
-        borderRadius: 3,
+        borderRadius: "12px",
         border: "1px solid",
         borderColor: softBorderColor,
         bgcolor: background,
@@ -75,7 +75,7 @@ const WeatherMetric = ({
             width: 44,
             height: 44,
             flexShrink: 0,
-            borderRadius: 2,
+            borderRadius: "10px",
             bgcolor:
               "rgba(255,255,255,0.75)",
             display: "flex",
@@ -135,7 +135,7 @@ const WeatherSummary = ({
           p: 4,
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
         }}
       >
         <Typography color="text.secondary">
@@ -155,7 +155,7 @@ const WeatherSummary = ({
           p: 4,
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
         }}
       >
         <Typography color="error">
@@ -211,7 +211,7 @@ const WeatherSummary = ({
       sx={{
         bgcolor: "transparent",
         border: softBorder,
-        borderRadius: 4,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           md: 4,
@@ -239,7 +239,7 @@ const WeatherSummary = ({
               width: 64,
               height: 64,
               flexShrink: 0,
-              borderRadius: 3,
+              borderRadius: "12px",
               bgcolor: infoTint,
               display: "flex",
               alignItems: "center",
@@ -287,7 +287,7 @@ const WeatherSummary = ({
             sx={{
               px: 2,
               py: 1.25,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor: infoTint,
               color: "text.primary",
               display: "flex",
@@ -315,7 +315,7 @@ const WeatherSummary = ({
             sx={{
               px: 2,
               py: 1.25,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor: raisedFill,
             }}
           >

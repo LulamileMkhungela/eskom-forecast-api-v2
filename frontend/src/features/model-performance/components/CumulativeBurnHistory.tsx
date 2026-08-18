@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 
 import {
+  StackedLineChartRounded,
   TimelineRounded,
   TrendingUpRounded,
 } from "@mui/icons-material";
@@ -421,7 +422,7 @@ const CumulativeBurnHistory = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 4,
@@ -452,7 +453,7 @@ const CumulativeBurnHistory = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 4,
@@ -485,7 +486,7 @@ const CumulativeBurnHistory = ({
       sx={{
         bgcolor: "transparent",
         border: softBorder,
-        borderRadius: 4,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           md: 4,
@@ -527,7 +528,7 @@ const CumulativeBurnHistory = ({
             sx={{
               width: 44,
               height: 44,
-              borderRadius: 3,
+              borderRadius: "12px",
               bgcolor: infoTint,
               color: "#1264FF",
               display: "flex",
@@ -536,7 +537,7 @@ const CumulativeBurnHistory = ({
               flexShrink: 0,
             }}
           >
-            <TimelineRounded />
+            <StackedLineChartRounded />
           </Box>
 
 
@@ -582,7 +583,7 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
+              borderRadius: "10px",
               bgcolor: raisedFill,
               color: softText,
               fontSize: 13,
@@ -600,7 +601,7 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
+              borderRadius: "10px",
               bgcolor: infoTint,
               color: "#1264FF",
               fontSize: 13,
@@ -616,7 +617,7 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
+              borderRadius: "10px",
               bgcolor: raisedFill,
               color: softText,
               fontSize: 13,

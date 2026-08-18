@@ -393,7 +393,7 @@ const ScenarioTrendChart = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 3.5,
@@ -412,7 +412,7 @@ const ScenarioTrendChart = ({
             sx={{
               width: 44,
               height: 44,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor:
                 "rgba(18,100,255,0.08)",
               display: "flex",
@@ -471,7 +471,7 @@ const ScenarioTrendChart = ({
         sx={{
           bgcolor: "transparent",
           border: softBorder,
-          borderRadius: 4,
+          borderRadius: "12px",
           minHeight: 520,
           display: "flex",
           alignItems: "center",
@@ -580,7 +580,7 @@ const ScenarioTrendChart = ({
             sx={{
               width: 48,
               height: 48,
-              borderRadius: 2.5,
+              borderRadius: "12px",
               bgcolor:
                 "rgba(18,100,255,0.08)",
               display: "flex",
@@ -642,7 +642,7 @@ const ScenarioTrendChart = ({
               gap: 0.8,
               px: 1.5,
               py: 0.8,
-              borderRadius: 2,
+              borderRadius: "10px",
               bgcolor: infoTint,
               border: softBorder,
             }}
@@ -692,7 +692,7 @@ const ScenarioTrendChart = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             p: {
               xs: 1.75,
               md: 2,
@@ -748,7 +748,7 @@ const ScenarioTrendChart = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             p: {
               xs: 1.75,
               md: 2,
@@ -803,7 +803,7 @@ const ScenarioTrendChart = ({
         <Box
           sx={{
             bgcolor: neutralFill,
-            borderRadius: 2.5,
+            borderRadius: "12px",
             p: {
               xs: 1.75,
               md: 2,

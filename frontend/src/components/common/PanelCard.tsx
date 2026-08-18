@@ -117,7 +117,7 @@ const PanelCard = ({
                 sx={{
                   width: 40,
                   height: 40,
-                  borderRadius: 2,
+                  borderRadius: "10px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -172,7 +172,7 @@ const PanelCard = ({
                   ? "rgba(11,22,38,0.72)"
                   : "rgba(255,255,255,0.72)",
               backdropFilter: "blur(2px)",
-              borderRadius: 2,
+              borderRadius: "10px",
               zIndex: 2,
             }}
           >
