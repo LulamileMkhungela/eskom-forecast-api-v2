@@ -6,6 +6,8 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 
+import { alpha } from "@mui/material/styles";
+
 import {
   FactCheckRounded,
 } from "@mui/icons-material";
@@ -53,6 +55,7 @@ const ModelPerformancePage = () => {
     horizon,
     metric,
     entityId,
+    setHorizon,
   } = useForecastContext();
 
 
@@ -129,7 +132,7 @@ const ModelPerformancePage = () => {
             border:
               "1px solid #E4EAF3",
 
-            borderRadius: 12,
+            borderRadius: "12px",
 
             boxShadow:
               "0 10px 30px rgba(16,32,62,0.05)",
@@ -167,14 +170,19 @@ const ModelPerformancePage = () => {
               sx={{
                 width: 44,
                 height: 44,
-                borderRadius: 2.5,
+                borderRadius: "12px",
 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
 
-                bgcolor:
-                  "rgba(0,84,166,0.1)",
+                bgcolor: (t) =>
+                  alpha(
+                    t.palette.primary.main,
+                    t.palette.mode === "dark"
+                      ? 0.2
+                      : 0.1
+                  ),
 
                 color:
                   "primary.main",
@@ -214,13 +222,28 @@ const ModelPerformancePage = () => {
           </Stack>
 
 
+          {/*
+            * The two horizon buttons are separate, self-contained
+            * pills (they used to be welded into one segmented block)
+            * and they now drive the shared forecast context instead
+            * of being read-only.
+            */}
+
           <ToggleButtonGroup
             exclusive
             value={performanceHorizon}
             size="small"
-            disabled
+            onChange={(
+              _event,
+              value
+            ) => {
+              if (value) {
+                setHorizon(value);
+              }
+            }}
             sx={{
               flexShrink: 0,
+              gap: 1,
             }}
           >
 
@@ -228,6 +251,7 @@ const ModelPerformancePage = () => {
               value="daily"
               sx={{
                 fontWeight: 700,
+                borderRadius: "10px !important",
               }}
             >
               Tactical Daily
@@ -238,6 +262,7 @@ const ModelPerformancePage = () => {
               value="monthly"
               sx={{
                 fontWeight: 700,
+                borderRadius: "10px !important",
               }}
             >
               Strategic Monthly

@@ -32,7 +32,7 @@ const UsernameField = ({
         ),
         sx: {
           height: 58,
-          borderRadius: 3,
+          borderRadius: "12px",
           bgcolor: "#FAFBFC",
 
           "& fieldset": {

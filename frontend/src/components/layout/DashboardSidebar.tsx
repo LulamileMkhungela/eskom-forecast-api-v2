@@ -1,9 +1,6 @@
 import {
   ChevronLeftRounded,
   ChevronRightRounded,
-  LogoutRounded,
-  SettingsRounded,
-  SupportAgentRounded,
 } from "@mui/icons-material";
 
 import {
@@ -44,6 +41,8 @@ const DashboardSidebar = ({
 }: DashboardSidebarProps) => {
   return (
     <Box
+      className="eskom-sidebar"
+      component="nav"
       sx={{
         width: collapsed ? 84 : 268,
         height: "100vh",
@@ -53,6 +52,14 @@ const DashboardSidebar = ({
         bgcolor: "#0A1C38",
         color: "#fff",
         borderRight: "1px solid rgba(255,255,255,0.08)",
+
+        /*
+         * The rail is a full-height panel flush with the window edge —
+         * it must stay square. (A global CSS rule used to force a 12px
+         * radius on every emotion-styled div, which rounded it.)
+         */
+        borderRadius: 0,
+
         transition: "width .28s cubic-bezier(0.16,1,0.3,1)",
         overflow: "hidden",
         position: "sticky",
@@ -121,7 +128,7 @@ const DashboardSidebar = ({
                 component={NavLink}
                 to={item.path}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: "10px",
                   mb: 0.75,
                   py: collapsed ? 1.4 : 1.25,
                   px: collapsed ? 1.25 : 1.75,
@@ -140,7 +147,7 @@ const DashboardSidebar = ({
                       top: "22%",
                       bottom: "22%",
                       width: 4,
-                      borderRadius: 4,
+                      borderRadius: "12px",
                       bgcolor: "#1890d7",
                     },
                   },
@@ -174,7 +181,7 @@ const DashboardSidebar = ({
       {/* Footer */}
       {/* <Box sx={{ p: collapsed ? 1.25 : 2 }}>
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <SettingsRounded fontSize="small" />
@@ -183,7 +190,7 @@ const DashboardSidebar = ({
         </ListItemButton>
 
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <SupportAgentRounded fontSize="small" />
@@ -192,7 +199,7 @@ const DashboardSidebar = ({
         </ListItemButton>
 
         <ListItemButton
-          sx={{ borderRadius: 2, py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
+          sx={{ borderRadius: "10px", py: 1, px: collapsed ? 1.5 : 1.75, color: "rgba(255,255,255,.6)" }}
         >
           <ListItemIcon sx={{ color: "inherit", minWidth: 40, justifyContent: collapsed ? "center" : "flex-start" }}>
             <LogoutRounded fontSize="small" />

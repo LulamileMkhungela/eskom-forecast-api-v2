@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 
 import {
+  StackedLineChartRounded,
   TimelineRounded,
   TrendingUpRounded,
 } from "@mui/icons-material";
@@ -23,6 +24,14 @@ import {
   useOotHistory,
 } from "../hooks/useModelPerformance";
 
+
+
+import {
+  infoTint,
+  raisedFill,
+  softBorder,
+  softText,
+} from "../../../theme/surfaces";
 
 /**
  * ======================================================
@@ -411,10 +420,9 @@ const CumulativeBurnHistory = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E2E7EF",
-          borderRadius: 4,
+          bgcolor: "transparent",
+          border: softBorder,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 4,
@@ -443,10 +451,9 @@ const CumulativeBurnHistory = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E2E7EF",
-          borderRadius: 4,
+          bgcolor: "transparent",
+          border: softBorder,
+          borderRadius: "12px",
           p: {
             xs: 2.5,
             md: 4,
@@ -477,10 +484,9 @@ const CumulativeBurnHistory = ({
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        border:
-          "1px solid #E2E7EF",
-        borderRadius: 4,
+        bgcolor: "transparent",
+        border: softBorder,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           md: 4,
@@ -522,8 +528,8 @@ const CumulativeBurnHistory = ({
             sx={{
               width: 44,
               height: 44,
-              borderRadius: 3,
-              bgcolor: "#EEF4FF",
+              borderRadius: "12px",
+              bgcolor: infoTint,
               color: "#1264FF",
               display: "flex",
               alignItems: "center",
@@ -531,7 +537,7 @@ const CumulativeBurnHistory = ({
               flexShrink: 0,
             }}
           >
-            <TimelineRounded />
+            <StackedLineChartRounded />
           </Box>
 
 
@@ -544,7 +550,7 @@ const CumulativeBurnHistory = ({
             <Typography
               variant="h5"
               fontWeight={800}
-              color="#172B4D"
+              color="text.primary"
             >
               {selectedMetric.label} History — Actual vs Predicted
             </Typography>
@@ -577,9 +583,9 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
-              bgcolor: "#F4F6F9",
-              color: "#536176",
+              borderRadius: "10px",
+              bgcolor: raisedFill,
+              color: softText,
               fontSize: 13,
               fontWeight: 700,
               whiteSpace: "nowrap",
@@ -595,8 +601,8 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
-              bgcolor: "#EEF4FF",
+              borderRadius: "10px",
+              bgcolor: infoTint,
               color: "#1264FF",
               fontSize: 13,
               fontWeight: 700,
@@ -611,9 +617,9 @@ const CumulativeBurnHistory = ({
             sx={{
               px: 1.5,
               py: 0.75,
-              borderRadius: 2,
-              bgcolor: "#F4F6F9",
-              color: "#536176",
+              borderRadius: "10px",
+              bgcolor: raisedFill,
+              color: softText,
               fontSize: 13,
               fontWeight: 700,
               whiteSpace: "nowrap",
@@ -656,7 +662,7 @@ const CumulativeBurnHistory = ({
 
             <Typography
               fontWeight={700}
-              color="#536176"
+              color="text.secondary"
             >
               No {selectedMetric.label.toLowerCase()} history data
             </Typography>
@@ -786,15 +792,13 @@ const CumulativeBurnHistory = ({
                 }}
 
                 contentStyle={{
-                  borderRadius: 12,
-                  border:
-                    "1px solid #E2E7EF",
+                  borderRadius: "12px",
+                  border: "1px solid #E2E7EF",
                   boxShadow:
                     "0 10px 30px rgba(0,0,0,0.08)",
                 }}
 
                 labelStyle={{
-                  color: "#172B4D",
                   fontWeight: 700,
                   marginBottom: 6,
                 }}

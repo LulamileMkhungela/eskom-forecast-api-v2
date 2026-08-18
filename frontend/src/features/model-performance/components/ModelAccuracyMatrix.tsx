@@ -7,6 +7,8 @@ import {
   Chip,
   Stack,
   Typography,
+  alpha,
+  useTheme,
 } from "@mui/material";
 
 import {
@@ -24,6 +26,20 @@ import {
 } from "../hooks/useModelPerformance";
 
 
+
+
+import {
+  cardBorderColor,
+  cardFill,
+  hairlineColor,
+  infoTint,
+  softBorderColor,
+  softText,
+} from "../../../theme/surfaces";
+
+import {
+  useForecastContext,
+} from "../../../contexts/ForecastContext";
 
 interface ModelAccuracyMatrixProps {
   horizon: PerformanceHorizon;
@@ -56,6 +72,42 @@ const ModelAccuracyMatrix = ({
     isLoading,
     isError,
   } = useModelMetrics();
+
+  const theme = useTheme();
+
+  const isDark =
+    theme.palette.mode === "dark";
+
+  /*
+   * The matrix is a station picker as well as a table:
+   * clicking a row selects that power station globally.
+   */
+  const { setEntityId } =
+    useForecastContext();
+
+  /* Shared surface tones for the table chrome. */
+  const headBg = isDark
+    ? "#16243C"
+    : "#F8FAFD";
+
+  /*
+   * The station column is sticky while the metric columns scroll
+   * underneath it, so it has to stay opaque — a transparent cell
+   * would let the numbers bleed through it.
+   */
+  const stationBg = isDark
+    ? "#121F36"
+    : "#FFFFFF";
+
+  const selectedBg = isDark
+    ? "rgba(79,181,234,0.16)"
+    : "#EEF4FF";
+
+  const selectedInk = isDark
+    ? "#6FC5F0"
+    : "#1264FF";
+
+  const rowBorder = hairlineColor(theme);
 
 
 
@@ -243,25 +295,39 @@ const ModelAccuracyMatrix = ({
     {
       target: "Input",
       label: "Burn",
-      color: "#1264FF",
-      lightColor: "#EEF4FF",
-      borderColor: "#D7E5FF",
+      color: isDark ? "#6FC5F0" : "#1264FF",
+      lightColor: isDark
+        ? alpha("#4FB5EA", 0.14)
+        : "#EEF4FF",
+      borderColor: isDark
+        ? alpha("#4FB5EA", 0.5)
+        : "#D7E5FF",
     },
 
     {
       target: "Replenishment",
       label: "Supply",
-      color: "#008C6A",
-      lightColor: "#ECF8F3",
-      borderColor: "#CDEDE1",
+      color: isDark ? "#5AD9A6" : "#008C6A",
+      lightColor: isDark
+        ? alpha("#34C48B", 0.14)
+        : "#ECF8F3",
+      borderColor: isDark
+        ? alpha("#34C48B", 0.5)
+        : "#CDEDE1",
     },
 
     {
       target: "Stockpile",
       label: "Stockpile",
-      color: "#F59E0B",
-      lightColor: "#FFF7E8",
-      borderColor: "#F7DFC0",
+      /* amber text on the light amber tint needs to be darker to stay
+         readable (the bright #F59E0B only scored 2:1) */
+      color: isDark ? "#FFD25E" : "#B45309",
+      lightColor: isDark
+        ? alpha("#F5BC2C", 0.14)
+        : "#FFF7E8",
+      borderColor: isDark
+        ? alpha("#F5BC2C", 0.5)
+        : "#F7DFC0",
     },
   ];
 
@@ -277,12 +343,12 @@ const ModelAccuracyMatrix = ({
     return (
       <Box
         sx={{
-          bgcolor: "background.paper",
+          bgcolor: cardFill,
 
           border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-          borderRadius: 12,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -320,7 +386,7 @@ const ModelAccuracyMatrix = ({
           border:
             "1px solid #F0C7CC",
 
-          borderRadius: 12,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -374,12 +440,12 @@ const ModelAccuracyMatrix = ({
     return (
       <Box
         sx={{
-          bgcolor: "background.paper",
+          bgcolor: cardFill,
 
           border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-          borderRadius: 12,
+          borderRadius: "12px",
 
           p: {
             xs: 2.5,
@@ -392,7 +458,7 @@ const ModelAccuracyMatrix = ({
         <TableChartRounded
           sx={{
             fontSize: 42,
-            color: "#AAB4C3",
+            color: softText,
             mb: 1,
           }}
         />
@@ -429,12 +495,12 @@ const ModelAccuracyMatrix = ({
   return (
     <Box
       sx={{
-        bgcolor: "background.paper",
+        bgcolor: cardFill,
 
         border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-        borderRadius: 12,
+        borderRadius: "12px",
 
         p: {
           xs: 2,
@@ -474,9 +540,9 @@ const ModelAccuracyMatrix = ({
             sx={{
               width: 48,
               height: 48,
-              borderRadius: 3,
-              bgcolor: "#EEF4FF",
-              color: "#1264FF",
+              borderRadius: "12px",
+              bgcolor: infoTint,
+              color: selectedInk,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -521,10 +587,11 @@ const ModelAccuracyMatrix = ({
               : `${entities.length} stations`
           }
           sx={{
-            bgcolor: "#F4F6F9",
-            color: "#536176",
+            bgcolor: "transparent",
+            color: softText,
+            border: `1px solid ${softBorderColor(theme)}`,
             fontWeight: 700,
-            borderRadius: 2,
+            borderRadius: "10px",
           }}
         />
       </Stack>
@@ -559,10 +626,11 @@ const ModelAccuracyMatrix = ({
                 border:
                   `1px solid ${config.borderColor}`,
 
-                bgcolor:
-                  config.lightColor,
+                bgcolor: isDark
+                  ? "transparent"
+                  : config.lightColor,
 
-                borderRadius: 3,
+                borderRadius: "12px",
 
                 px: 2,
 
@@ -623,6 +691,22 @@ const ModelAccuracyMatrix = ({
           TABLE
       ================================================== */}
 
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{
+          display: {
+            xs: "block",
+            xl: "none",
+          },
+          mb: 1,
+          fontWeight: 600,
+        }}
+      >
+        Tip: select a row to switch the dashboard to that power
+        station · scroll sideways for the Stockpile model →
+      </Typography>
+
       <Box
         sx={{
           width: "100%",
@@ -631,7 +715,7 @@ const ModelAccuracyMatrix = ({
           border: "1px solid",
           borderColor: "divider",
 
-          borderRadius: 3,
+          borderRadius: "12px",
 
           "&::-webkit-scrollbar":
             {
@@ -640,10 +724,11 @@ const ModelAccuracyMatrix = ({
 
           "&::-webkit-scrollbar-thumb":
             {
-              backgroundColor:
-                "#CBD5E1",
+              backgroundColor: isDark
+                ? "rgba(255,255,255,0.28)"
+                : "#CBD5E1",
 
-              borderRadius: 10,
+              borderRadius: "12px",
             },
         }}
       >
@@ -680,8 +765,7 @@ const ModelAccuracyMatrix = ({
               textTransform:
                 "uppercase",
 
-              color:
-                "#536176",
+              color: softText,
 
               borderBottom:
                 "1px solid",
@@ -699,8 +783,7 @@ const ModelAccuracyMatrix = ({
              */
 
             "& td": {
-              borderBottom:
-                "1px solid #EEF1F5",
+              borderBottom: `1px solid ${rowBorder}`,
 
               color:
                 "text.primary",
@@ -720,8 +803,9 @@ const ModelAccuracyMatrix = ({
 
             "& tbody tr:hover td":
               {
-                bgcolor:
-                  "#F8FAFD",
+                bgcolor: isDark
+                  ? "rgba(255,255,255,0.06)"
+                  : "#F4F7FC",
               },
 
             "& tbody tr:last-child td":
@@ -778,8 +862,7 @@ const ModelAccuracyMatrix = ({
 
                   zIndex: 5,
 
-                  background:
-                    "#F8FAFD",
+                  background: headBg,
 
                   textAlign:
                     "left",
@@ -887,8 +970,7 @@ const ModelAccuracyMatrix = ({
                           textAlign:
                             "right",
 
-                          background:
-                            "#FBFCFE",
+                          background: headBg,
                         }}
                       >
                         {header}
@@ -914,15 +996,57 @@ const ModelAccuracyMatrix = ({
                   entityId;
 
                 return (
-                  <tr
+                  <Box
+                    component="tr"
                     key={entity}
+                    onClick={() =>
+                      setEntityId(entity)
+                    }
+                    role="button"
+                    tabIndex={0}
+                    aria-selected={isSelected}
+                    onKeyDown={(
+                      event: React.KeyboardEvent
+                    ) => {
+                      if (
+                        event.key === "Enter" ||
+                        event.key === " "
+                      ) {
+                        event.preventDefault();
+                        setEntityId(entity);
+                      }
+                    }}
+                    sx={{
+                      cursor: "pointer",
+
+                      /* Selected station highlights the whole row. */
+                      "& td": isSelected
+                        ? {
+                            bgcolor: selectedBg,
+                          }
+                        : undefined,
+
+                      "&:hover td": {
+                        bgcolor: isSelected
+                          ? selectedBg
+                          : isDark
+                            ? "rgba(255,255,255,0.06)"
+                            : "#F4F7FC",
+                      },
+
+                      "&:focus-visible": {
+                        outline: `2px solid ${selectedInk}`,
+                        outlineOffset: -2,
+                      },
+                    }}
                   >
                     {/* ------------------------------------------
                         STATION
                     ------------------------------------------ */}
 
-                    <td
-                      style={{
+                    <Box
+                      component="td"
+                      sx={{
                         position:
                           "sticky",
 
@@ -930,18 +1054,13 @@ const ModelAccuracyMatrix = ({
 
                         zIndex: 2,
 
-                        background:
-                          isSelected
-                            ? "#EEF4FF"
-                            : "#FFFFFF",
+                        bgcolor: isSelected
+                          ? selectedBg
+                          : stationBg,
 
-                        padding:
-                          "14px 16px",
+                        p: "14px 16px",
 
-                        borderRight:
-                          "1px solid",
-                        borderColor:
-                          "divider",
+                        borderRight: `1px solid ${rowBorder}`,
                       }}
                     >
                       <Stack
@@ -958,7 +1077,7 @@ const ModelAccuracyMatrix = ({
                                 "50%",
 
                               bgcolor:
-                                "#1264FF",
+                                selectedInk,
 
                               flexShrink:
                                 0,
@@ -974,7 +1093,7 @@ const ModelAccuracyMatrix = ({
                           }
                           color={
                             isSelected
-                              ? "#1264FF"
+                              ? selectedInk
                               : "text.primary"
                           }
                         >
@@ -983,7 +1102,7 @@ const ModelAccuracyMatrix = ({
                           )}
                         </Typography>
                       </Stack>
-                    </td>
+                    </Box>
 
 
 
@@ -1063,7 +1182,7 @@ const ModelAccuracyMatrix = ({
                         );
                       }
                     )}
-                  </tr>
+                  </Box>
                 );
               }
             )}
@@ -1127,12 +1246,11 @@ const ModelAccuracyMatrix = ({
           mt: 2.5,
           p: 2,
 
-          borderRadius: 2.5,
+          borderRadius: "12px",
 
-          bgcolor: "#F8FAFD",
+          bgcolor: "transparent",
 
-          border:
-            "1px solid #E8EDF3",
+          border: `1px solid ${softBorderColor(theme)}`,
         }}
       >
         <Typography
@@ -1192,7 +1310,7 @@ const MetricCell = ({
         ? "#F59E0B"
         : status === "poor"
           ? "#DC2626"
-          : "#AAB4C3";
+          : "#7C8BA6";
 
   return (
     <td

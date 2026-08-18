@@ -109,7 +109,7 @@ const StationHealth = () => {
           value={availability}
           sx={{
             height: 10,
-            borderRadius: 5,
+            borderRadius: "12px",
           }}
         />
       </Box>

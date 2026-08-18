@@ -20,10 +20,10 @@ const ForecastHeader = () => {
       elevation={0}
       sx={{
         p: 4,
-        borderRadius: 4,
+        borderRadius: "12px",
         border: "1px solid",
         borderColor: "divider",
-        bgcolor: "#fff",
+        bgcolor: "transparent",
       }}
     >
       <Stack
@@ -96,7 +96,7 @@ const ForecastHeader = () => {
             variant="outlined"
             startIcon={<DownloadRounded />}
             sx={{
-              borderRadius: 3,
+              borderRadius: "12px",
               height: 46,
               px: 3,
             }}
@@ -108,7 +108,7 @@ const ForecastHeader = () => {
             variant="outlined"
             startIcon={<AutorenewRounded />}
             sx={{
-              borderRadius: 3,
+              borderRadius: "12px",
               height: 46,
               px: 3,
             }}
@@ -120,7 +120,7 @@ const ForecastHeader = () => {
             variant="contained"
             startIcon={<PlayArrowRounded />}
             sx={{
-              borderRadius: 3,
+              borderRadius: "12px",
               height: 46,
               px: 4,
               boxShadow: "none",

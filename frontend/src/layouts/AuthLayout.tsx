@@ -31,7 +31,7 @@ const AuthLayout = () => {
           elevation={0}
           sx={{
             overflow: "hidden",
-            borderRadius: 8,
+            borderRadius: "12px",
             minHeight: "86vh",
             boxShadow: "0 30px 80px rgba(15,23,42,.12)",
           }}
@@ -199,7 +199,7 @@ const AuthLayout = () => {
                   sx={{
                     width: "100%",
                     maxWidth: 500,
-                    borderRadius: 6,
+                    borderRadius: "12px",
                     bgcolor: "#fff",
                     p: {
                       xs: 4,

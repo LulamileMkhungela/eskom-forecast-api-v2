@@ -24,6 +24,16 @@ import {
 } from "../hooks/useModelPerformance";
 
 
+
+import {
+  cardBorderColor,
+  cardFill,
+  infoTint,
+  raisedFill,
+  softBorder,
+  softText,
+} from "../../../theme/surfaces";
+
 /*
  * ======================================================
  * OOT PERFORMANCE RECORD
@@ -340,13 +350,12 @@ const OotPerformanceChart = ({
     return (
       <Box
         sx={{
-          bgcolor:
-            "background.paper",
+          bgcolor: cardFill,
 
           border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-          borderRadius: 12,
+          borderRadius: "12px",
 
           p: 4,
 
@@ -375,13 +384,12 @@ const OotPerformanceChart = ({
     return (
       <Box
         sx={{
-          bgcolor:
-            "background.paper",
+          bgcolor: cardFill,
 
           border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-          borderRadius: 12,
+          borderRadius: "12px",
 
           p: 4,
 
@@ -409,13 +417,12 @@ const OotPerformanceChart = ({
   return (
     <Box
       sx={{
-        bgcolor:
-          "background.paper",
+        bgcolor: cardFill,
 
         border: "1px solid",
-          borderColor: "divider",
+          borderColor: cardBorderColor,
 
-        borderRadius: 12,
+        borderRadius: "12px",
 
         p: {
           xs: 2.5,
@@ -461,10 +468,9 @@ const OotPerformanceChart = ({
               width: 44,
               height: 44,
 
-              borderRadius: 3,
+              borderRadius: "12px",
 
-              bgcolor:
-                "#EEF4FF",
+              bgcolor: infoTint,
 
               color:
                 "#1264FF",
@@ -526,13 +532,11 @@ const OotPerformanceChart = ({
               px: 1.5,
               py: 0.75,
 
-              borderRadius: 2,
+              borderRadius: "10px",
 
-              bgcolor:
-                "#F4F6F9",
+              bgcolor: raisedFill,
 
-              color:
-                "#536176",
+              color: softText,
 
               fontSize: 13,
 
@@ -553,10 +557,9 @@ const OotPerformanceChart = ({
               px: 1.5,
               py: 0.75,
 
-              borderRadius: 2,
+              borderRadius: "10px",
 
-              bgcolor:
-                "#EEF4FF",
+              bgcolor: infoTint,
 
               color:
                 "#1264FF",
@@ -617,7 +620,7 @@ const OotPerformanceChart = ({
 
             <Typography
               fontWeight={700}
-              color="#536176"
+              color="text.secondary"
             >
               No out-of-time
               performance data
@@ -753,25 +756,18 @@ const OotPerformanceChart = ({
                 }}
 
                 contentStyle={{
-                  borderRadius:
-                    12,
+                  borderRadius: "12px",
 
-                  border: "1px solid",
-          borderColor: "divider",
+                  border: "1px solid #E2E7EF",
 
                   boxShadow:
                     "0 10px 30px rgba(0,0,0,0.08)",
                 }}
 
                 labelStyle={{
-                  color:
-                    "text.primary",
+                  fontWeight: 700,
 
-                  fontWeight:
-                    700,
-
-                  marginBottom:
-                    6,
+                  marginBottom: 6,
                 }}
               />
 
