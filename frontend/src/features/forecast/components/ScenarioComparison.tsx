@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 
 import {
+  CompareArrowsRounded,
   TrendingUpRounded,
 } from "@mui/icons-material";
 
@@ -29,6 +30,16 @@ import {
 } from "@tanstack/react-query";
 
 import forecastService from "../service/forecast.service";
+
+
+import {
+  cardBorderColor,
+  cardFill,
+  hairline,
+  infoTint,
+  neutralFill,
+  softBorder,
+} from "../../../theme/surfaces";
 
 interface ScenarioComparisonProps {
   filters: ForecastFilters;
@@ -440,10 +451,8 @@ const ScenarioComparison = ({
     return (
       <Box
         sx={{
-          bgcolor:
-            "#FFFFFF",
-          border:
-            "1px solid #E3E8EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -483,10 +492,8 @@ const ScenarioComparison = ({
     return (
       <Box
         sx={{
-          bgcolor:
-            "#FFFFFF",
-          border:
-            "1px solid #E3E8EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -511,10 +518,8 @@ const ScenarioComparison = ({
     return (
       <Box
         sx={{
-          bgcolor:
-            "#FFFFFF",
-          border:
-            "1px solid #E3E8EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -558,8 +563,7 @@ const ScenarioComparison = ({
 
         <Box
           sx={{
-            bgcolor:
-              "#F4F7FC",
+            bgcolor: neutralFill,
             borderRadius: 3,
             p: 2.5,
           }}
@@ -580,12 +584,10 @@ const ScenarioComparison = ({
         width: "100%",
         height: "100%",
         minWidth: 0,
-        bgcolor:
-          "background.paper",
+        bgcolor: cardFill,
         border: "1px solid",
-        borderColor:
-          "divider",
-        borderRadius: 12,
+        borderColor: cardBorderColor,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           md: 3.5,
@@ -632,7 +634,7 @@ const ScenarioComparison = ({
                 "center",
             }}
           >
-            <TrendingUpRounded
+            <CompareArrowsRounded
               sx={{
                 color:
                   "#1264FF",
@@ -672,10 +674,8 @@ const ScenarioComparison = ({
             px: 2,
             py: 1.25,
             borderRadius: 2.5,
-            border:
-              "1px solid #D7E3FF",
-            bgcolor:
-              "#F5F8FF",
+            border: softBorder,
+            bgcolor: infoTint,
             minWidth: 110,
             textAlign: "center",
           }}
@@ -691,7 +691,7 @@ const ScenarioComparison = ({
 
           <Typography
             fontSize={12}
-            color="#718096"
+            color="text.secondary"
           >
             periods
           </Typography>
@@ -713,8 +713,7 @@ const ScenarioComparison = ({
       >
         <Box
           sx={{
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
             borderRadius: 3,
             p: 2,
           }}
@@ -722,7 +721,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={12}
             fontWeight={700}
-            color="#718096"
+            color="text.secondary"
             textTransform="uppercase"
           >
             Baseline Average
@@ -740,7 +739,7 @@ const ScenarioComparison = ({
 
           <Typography
             fontSize={12.5}
-            color="#718096"
+            color="text.secondary"
           >
             {getMetricUnit()}
           </Typography>
@@ -748,8 +747,7 @@ const ScenarioComparison = ({
 
         <Box
           sx={{
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
             borderRadius: 3,
             p: 2,
           }}
@@ -757,7 +755,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={12}
             fontWeight={700}
-            color="#718096"
+            color="text.secondary"
             textTransform="uppercase"
           >
             {selectedScenarioLabel}
@@ -778,7 +776,7 @@ const ScenarioComparison = ({
 
           <Typography
             fontSize={12.5}
-            color="#718096"
+            color="text.secondary"
           >
             {getMetricUnit()}
           </Typography>
@@ -786,8 +784,7 @@ const ScenarioComparison = ({
 
         <Box
           sx={{
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
             borderRadius: 3,
             p: 2,
           }}
@@ -795,7 +792,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={12}
             fontWeight={700}
-            color="#718096"
+            color="text.secondary"
             textTransform="uppercase"
           >
             Scenario Impact
@@ -822,7 +819,7 @@ const ScenarioComparison = ({
 
           <Typography
             fontSize={12.5}
-            color="#718096"
+            color="text.secondary"
           >
             vs baseline
           </Typography>
@@ -855,7 +852,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={13}
             fontWeight={700}
-            color="#52637A"
+            color="text.secondary"
           >
             Baseline
           </Typography>
@@ -878,7 +875,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={13}
             fontWeight={700}
-            color="#52637A"
+            color="text.secondary"
           >
             {selectedScenarioLabel}
           </Typography>
@@ -948,9 +945,8 @@ const ScenarioComparison = ({
 
             <Tooltip
               contentStyle={{
-                border:
-                  "1px solid #E3E8EF",
-                borderRadius: 12,
+                border: "1px solid #E2E7EF",
+                borderRadius: "12px",
                 boxShadow:
                   "0 8px 24px rgba(23,43,77,0.12)",
                 padding:
@@ -1022,8 +1018,7 @@ const ScenarioComparison = ({
         sx={{
           mt: 2,
           pt: 2.5,
-          borderTop:
-            "1px solid #E3E8EF",
+          borderTop: hairline,
           display: "flex",
           justifyContent:
             "space-between",
@@ -1035,7 +1030,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={12}
             fontWeight={700}
-            color="#718096"
+            color="text.secondary"
             textTransform="uppercase"
           >
             Baseline Average
@@ -1064,7 +1059,7 @@ const ScenarioComparison = ({
           <Typography
             fontSize={12}
             fontWeight={700}
-            color="#718096"
+            color="text.secondary"
             textTransform="uppercase"
           >
             {selectedScenarioLabel} Average

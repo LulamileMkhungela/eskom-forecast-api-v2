@@ -37,6 +37,19 @@ import {
 import { useForecastEntities } from "../hooks/useForecast";
 
 
+
+import {
+  SurfaceValue,
+  cardBorderColor,
+  cardFill,
+  infoTint,
+  neutralFill,
+  softBorder,
+  softText,
+  successTint,
+  warningTint,
+} from "../../../theme/surfaces";
+
 interface WeatherIntelligenceProps {
   entityId?: string;
 }
@@ -371,12 +384,9 @@ const WeatherIntelligence = ({
       sx={{
         width: "100%",
         height: "100%",
-        bgcolor:
-          "background.paper",
-        border:
-          "1px solid",
-        borderColor:
-          "divider",
+        bgcolor: cardFill,
+        border: "1px solid",
+        borderColor: cardBorderColor,
         borderRadius:
           "12px !important",
         p: {
@@ -443,8 +453,7 @@ const WeatherIntelligence = ({
                 width: 48,
                 height: 48,
                 borderRadius: 2,
-                bgcolor:
-                  "#EEF4FF",
+                bgcolor: infoTint,
                 color:
                   "#1264FF",
                 display: "flex",
@@ -921,8 +930,7 @@ const CurrentWeather = ({
             sx={{
               px: 2,
               py: 1.25,
-              bgcolor:
-                "#EEF4FF",
+              bgcolor: infoTint,
               borderRadius: 2.5,
               color:
                 "text.primary",
@@ -941,11 +949,9 @@ const CurrentWeather = ({
             sx={{
               px: 2,
               py: 1.25,
-              bgcolor:
-                "#F5F6F8",
+              bgcolor: neutralFill,
               borderRadius: 2.5,
-              color:
-                "#68758A",
+              color: softText,
               fontWeight: 700,
             }}
           >
@@ -1111,10 +1117,8 @@ const WeatherOutlookGrid = ({
               sx={{
                 p: 2,
                 borderRadius: 3,
-                bgcolor:
-                  "#F7F9FC",
-                border:
-                  "1px solid #E4E9F0",
+                bgcolor: neutralFill,
+                border: softBorder,
                 minWidth: 0,
               }}
             >
@@ -1167,7 +1171,7 @@ const WeatherOutlookGrid = ({
               <Typography
                 variant="body2"
                 fontWeight={700}
-                color="#68758A"
+                color="text.secondary"
                 noWrap
                 title={
                   record.condition
@@ -1228,7 +1232,7 @@ const WeatherOutlookGrid = ({
 
                 <Typography
                   variant="caption"
-                  color="#68758A"
+                  color="text.secondary"
                   fontWeight={700}
                 >
                   💨{" "}
@@ -1299,7 +1303,13 @@ const WeatherSignals = ({
   }
 
 
-  const items = [
+  const items: {
+    label: string;
+    value: string;
+    icon: React.ReactNode;
+    color: string;
+    bg: SurfaceValue;
+  }[] = [
     {
       label:
         "Average temperature",
@@ -1310,8 +1320,7 @@ const WeatherSignals = ({
         <ThermostatRounded />,
       color:
         "#F59E0B",
-      bg:
-        "#FFF8ED",
+      bg: warningTint,
     },
     {
       label:
@@ -1323,8 +1332,7 @@ const WeatherSignals = ({
         <OpacityRounded />,
       color:
         "#1683D8",
-      bg:
-        "#F0F7FF",
+      bg: infoTint,
     },
     {
       label:
@@ -1336,8 +1344,7 @@ const WeatherSignals = ({
         <AirRounded />,
       color:
         "#008C7A",
-      bg:
-        "#F0FAF8",
+      bg: successTint,
     },
     {
       label:
@@ -1350,8 +1357,7 @@ const WeatherSignals = ({
         <WbSunnyRounded />,
       color:
         "#F59E0B",
-      bg:
-        "#FFF8ED",
+      bg: warningTint,
     },
   ];
 
@@ -1404,6 +1410,7 @@ const WeatherSignals = ({
                 borderRadius: 3,
                 bgcolor:
                   item.bg,
+                border: softBorder,
                 minWidth: 0,
               }}
             >
@@ -1419,8 +1426,10 @@ const WeatherSignals = ({
                     width: 42,
                     height: 42,
                     borderRadius: 2,
-                    bgcolor:
-                      "rgba(255,255,255,0.8)",
+                    bgcolor: (t) =>
+                      t.palette.mode === "dark"
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(255,255,255,0.8)",
                     color:
                       item.color,
                     display:
@@ -1439,7 +1448,7 @@ const WeatherSignals = ({
                 <Typography
                   variant="body2"
                   fontWeight={700}
-                  color="#68758A"
+                  color="text.secondary"
                 >
                   {
                     item.label
@@ -1531,10 +1540,8 @@ const MiniSignal = ({
     <Box
       sx={{
         p: 2,
-        bgcolor:
-          "#F7F9FC",
-        border:
-          "1px solid #E4E9F0",
+        bgcolor: neutralFill,
+        border: softBorder,
         borderRadius: 3,
       }}
     >
@@ -1580,10 +1587,8 @@ const WeatherMetric = ({
       sx={{
         p: 2,
         borderRadius: 2,
-        bgcolor:
-          "#F7F9FC",
-        border:
-          "1px solid #E4E9F0",
+        bgcolor: neutralFill,
+        border: softBorder,
         minWidth: 0,
         overflow: "hidden",
       }}
@@ -1603,8 +1608,7 @@ const WeatherMetric = ({
             width: 38,
             height: 38,
             borderRadius: 1.5,
-            bgcolor:
-              "#FFFFFF",
+            bgcolor: "transparent",
             color:
               "#1264FF",
             display:
@@ -1623,7 +1627,7 @@ const WeatherMetric = ({
         <Typography
           variant="body2"
           fontWeight={700}
-          color="#68758A"
+          color="text.secondary"
           noWrap
           sx={{
             flex: 1,

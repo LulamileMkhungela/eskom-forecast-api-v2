@@ -23,7 +23,7 @@ const ForecastHeader = () => {
         borderRadius: 4,
         border: "1px solid",
         borderColor: "divider",
-        bgcolor: "#fff",
+        bgcolor: "transparent",
       }}
     >
       <Stack

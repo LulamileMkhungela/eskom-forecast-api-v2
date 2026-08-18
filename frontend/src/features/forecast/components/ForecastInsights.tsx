@@ -10,6 +10,7 @@ import {
 
 import {
   AutoGraphRounded,
+  CompareArrowsRounded,
   TrendingUpRounded,
   WarningAmberRounded,
   ErrorOutlineRounded,
@@ -38,6 +39,19 @@ import {
 } from "../hooks/useForecast";
 
 
+
+import {
+  SurfaceValue,
+  cardBorderColor,
+  cardFill,
+  errorTint,
+  infoTint,
+  neutralFill,
+  softBorder,
+  successTint,
+  warningTint,
+} from "../../../theme/surfaces";
+
 interface ForecastInsightsProps {
   filters: ForecastFilters;
 }
@@ -48,7 +62,7 @@ interface InsightCardProps {
   value: string;
   description: string;
   icon: React.ReactNode;
-  backgroundColor: string;
+  backgroundColor: SurfaceValue;
   valueColor?: string;
 }
 
@@ -84,6 +98,7 @@ const InsightCard = ({
         },
         borderRadius: 2.5,
         backgroundColor,
+        border: softBorder,
         overflow: "hidden",
       }}
     >
@@ -423,13 +438,10 @@ const ForecastInsights = ({
         width: "100%",
         height: "100%",
         minWidth: 0,
-        bgcolor:
-          "background.paper",
-        border:
-          "1px solid",
-        borderColor:
-          "divider",
-        borderRadius: 12,
+        bgcolor: cardFill,
+        border: "1px solid",
+        borderColor: cardBorderColor,
+        borderRadius: "12px",
         p: {
           xs: 2.5,
           sm: 3,
@@ -479,8 +491,7 @@ const ForecastInsights = ({
               alignItems: "center",
               justifyContent: "center",
               borderRadius: 2.5,
-              backgroundColor:
-                "#EEF4FF",
+              backgroundColor: infoTint,
             }}
           >
             <AutoGraphRounded
@@ -630,7 +641,7 @@ const ForecastInsights = ({
                     }}
                   />
                 }
-                backgroundColor="#F6F8FC"
+                backgroundColor={neutralFill}
               />
 
 
@@ -648,7 +659,7 @@ const ForecastInsights = ({
                 )}%`}
                 description="Above average forecast"
                 icon={
-                  <TrendingUpRounded
+                  <CompareArrowsRounded
                     sx={{
                       color:
                         "#F57C00",
@@ -656,7 +667,7 @@ const ForecastInsights = ({
                     }}
                   />
                 }
-                backgroundColor="#F6F8FC"
+                backgroundColor={neutralFill}
               />
 
 
@@ -685,8 +696,8 @@ const ForecastInsights = ({
                 backgroundColor={
                   lowestStockpile <
                     0
-                    ? "#FFF6F6"
-                    : "#F6FAF7"
+                    ? errorTint
+                    : successTint
                 }
                 valueColor={
                   lowestStockpile <
@@ -727,8 +738,8 @@ const ForecastInsights = ({
                 backgroundColor={
                   negativePeriods >
                     0
-                    ? "#FFF8F0"
-                    : "#F6FAF7"
+                    ? warningTint
+                    : successTint
                 }
                 valueColor={
                   negativePeriods >
@@ -854,8 +865,8 @@ const ForecastInsights = ({
                 backgroundColor:
                   negativePeriods >
                     0
-                    ? "#FFF8F0"
-                    : "#F2FAF4",
+                    ? warningTint
+                    : successTint,
                 border:
                   "1px solid",
                 borderColor:

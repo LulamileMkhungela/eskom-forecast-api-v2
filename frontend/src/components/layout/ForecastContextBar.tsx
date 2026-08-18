@@ -172,26 +172,62 @@ const ForecastContextBar = ({
       window;
 
 
-    const handleScroll =
-      () => {
+    /*
+     * =================================================
+     * FLICKER-FREE COMPACTION
+     * =================================================
+     *
+     * Compacting the bar changes its height, which changes the
+     * scroll height of the container, which can immediately push
+     * the scroll position back across a single threshold — the
+     * bar then expands, and the loop repeats as a visible flicker.
+     *
+     * Two guards:
+     *
+     * 1. HYSTERESIS — separate enter (>96px) and exit (<32px)
+     *    thresholds, so a small layout shift can never flip the
+     *    state straight back.
+     *
+     * 2. requestAnimationFrame — at most one state update per
+     *    frame instead of one per scroll event.
+     */
 
-        const scrollTop =
-          target === window
-            ? window.scrollY
-            : (
-                target as HTMLElement
-              ).scrollTop;
+    let frame = 0;
+
+    const COMPACT_ENTER = 96;
+    const COMPACT_EXIT = 32;
+
+    const measure = () => {
+
+      frame = 0;
+
+      const scrollTop =
+        target === window
+          ? window.scrollY
+          : (
+              target as HTMLElement
+            ).scrollTop;
+
+      setIsCompact(
+        (compact) =>
+          compact
+            ? scrollTop > COMPACT_EXIT
+            : scrollTop > COMPACT_ENTER
+      );
+    };
 
 
-        /*
-         * Compact after the user has
-         * moved down approximately 40px.
-         */
+    const handleScroll = () => {
 
-        setIsCompact(
-          scrollTop > 40
+      if (frame) {
+        return;
+      }
+
+      frame =
+        window.requestAnimationFrame(
+          measure
         );
-      };
+    };
 
 
     target.addEventListener(
@@ -207,10 +243,16 @@ const ForecastContextBar = ({
      * Set the initial state.
      */
 
-    handleScroll();
+    measure();
 
 
     return () => {
+
+      if (frame) {
+        window.cancelAnimationFrame(
+          frame
+        );
+      }
 
       target.removeEventListener(
         "scroll",
@@ -439,6 +481,15 @@ const ForecastContextBar = ({
           "border-radius 220ms ease, " +
           "box-shadow 220ms ease",
 
+        /*
+         * Sticky elements that repaint on every scroll frame are the
+         * classic source of scroll flicker in Chromium. Promoting the
+         * bar to its own compositor layer keeps it stable.
+         */
+        willChange: "padding, margin",
+
+        backfaceVisibility: "hidden",
+
         isolation:
           "isolate",
       }}
@@ -588,7 +639,9 @@ const ForecastContextBar = ({
           {/* RESET */}
 
           <Button
-            variant="outlined"
+            variant="contained"
+            color="primary"
+            disableElevation
             size={
               isCompact
                 ? "small"
@@ -604,6 +657,7 @@ const ForecastContextBar = ({
               flexShrink: 0,
               fontWeight: 700,
               whiteSpace: "nowrap",
+              color: "primary.contrastText",
             }}
           >
             Reset

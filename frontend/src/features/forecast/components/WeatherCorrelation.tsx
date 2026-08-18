@@ -834,7 +834,7 @@ const forecastDates =
       sx={{
         width: "100%",
         height: "100%",
-        borderRadius: 12,
+        borderRadius: "12px",
       }}
     >
 
@@ -1089,7 +1089,7 @@ const forecastDates =
                   display: "grid",
 
                   gridTemplateColumns:
-                    "150px repeat(7, minmax(80px, 1fr))",
+                    "150px repeat(7, minmax(92px, 1fr))",
 
                   gap: 1,
 
@@ -1123,6 +1123,15 @@ const forecastDates =
                           variant="caption"
                           fontWeight={700}
                           color="text.secondary"
+                          sx={{
+                            /* keep header words whole — they used to
+                               break mid-word ("Temperatu re") */
+                            display: "block",
+                            whiteSpace: "nowrap",
+                            wordBreak: "keep-all",
+                            overflowWrap: "normal",
+                            fontSize: 11.5,
+                          }}
                         >
                           {
                             variable.label

@@ -16,6 +16,12 @@ import {
 } from "../hooks/useWeather";
 
 
+
+import {
+  neutralFill,
+  softBorder,
+} from "../../../theme/surfaces";
+
 interface WeatherSignalsProps {
   entityId: string;
 
@@ -49,9 +55,8 @@ const WeatherSignals = ({
       <Box
         sx={{
           p: 4,
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E0E6EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
         }}
       >
@@ -73,9 +78,8 @@ const WeatherSignals = ({
       <Box
         sx={{
           p: 4,
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E0E6EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
         }}
       >
@@ -109,9 +113,8 @@ const WeatherSignals = ({
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        border:
-          "1px solid #E0E6EF",
+        bgcolor: "transparent",
+        border: softBorder,
         borderRadius: 4,
         p: {
           xs: 2.5,
@@ -237,9 +240,8 @@ const WeatherSignals = ({
           mt: 3,
           p: 2.5,
           borderRadius: 3,
-          bgcolor: "#F7F9FC",
-          border:
-            "1px solid #E6EBF2",
+          bgcolor: neutralFill,
+          border: softBorder,
         }}
       >
 
@@ -385,7 +387,7 @@ const Signal = ({
 
         <Typography
           variant="body2"
-          color="#68758A"
+          color="text.secondary"
           fontWeight={700}
           sx={{
             minWidth: 0,

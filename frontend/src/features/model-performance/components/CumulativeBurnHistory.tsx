@@ -24,6 +24,14 @@ import {
 } from "../hooks/useModelPerformance";
 
 
+
+import {
+  infoTint,
+  raisedFill,
+  softBorder,
+  softText,
+} from "../../../theme/surfaces";
+
 /**
  * ======================================================
  * BACKEND OOT RECORD
@@ -411,9 +419,8 @@ const CumulativeBurnHistory = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E2E7EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -443,9 +450,8 @@ const CumulativeBurnHistory = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E2E7EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -477,9 +483,8 @@ const CumulativeBurnHistory = ({
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        border:
-          "1px solid #E2E7EF",
+        bgcolor: "transparent",
+        border: softBorder,
         borderRadius: 4,
         p: {
           xs: 2.5,
@@ -523,7 +528,7 @@ const CumulativeBurnHistory = ({
               width: 44,
               height: 44,
               borderRadius: 3,
-              bgcolor: "#EEF4FF",
+              bgcolor: infoTint,
               color: "#1264FF",
               display: "flex",
               alignItems: "center",
@@ -544,7 +549,7 @@ const CumulativeBurnHistory = ({
             <Typography
               variant="h5"
               fontWeight={800}
-              color="#172B4D"
+              color="text.primary"
             >
               {selectedMetric.label} History — Actual vs Predicted
             </Typography>
@@ -578,8 +583,8 @@ const CumulativeBurnHistory = ({
               px: 1.5,
               py: 0.75,
               borderRadius: 2,
-              bgcolor: "#F4F6F9",
-              color: "#536176",
+              bgcolor: raisedFill,
+              color: softText,
               fontSize: 13,
               fontWeight: 700,
               whiteSpace: "nowrap",
@@ -596,7 +601,7 @@ const CumulativeBurnHistory = ({
               px: 1.5,
               py: 0.75,
               borderRadius: 2,
-              bgcolor: "#EEF4FF",
+              bgcolor: infoTint,
               color: "#1264FF",
               fontSize: 13,
               fontWeight: 700,
@@ -612,8 +617,8 @@ const CumulativeBurnHistory = ({
               px: 1.5,
               py: 0.75,
               borderRadius: 2,
-              bgcolor: "#F4F6F9",
-              color: "#536176",
+              bgcolor: raisedFill,
+              color: softText,
               fontSize: 13,
               fontWeight: 700,
               whiteSpace: "nowrap",
@@ -656,7 +661,7 @@ const CumulativeBurnHistory = ({
 
             <Typography
               fontWeight={700}
-              color="#536176"
+              color="text.secondary"
             >
               No {selectedMetric.label.toLowerCase()} history data
             </Typography>
@@ -786,15 +791,13 @@ const CumulativeBurnHistory = ({
                 }}
 
                 contentStyle={{
-                  borderRadius: 12,
-                  border:
-                    "1px solid #E2E7EF",
+                  borderRadius: "12px",
+                  border: "1px solid #E2E7EF",
                   boxShadow:
                     "0 10px 30px rgba(0,0,0,0.08)",
                 }}
 
                 labelStyle={{
-                  color: "#172B4D",
                   fontWeight: 700,
                   marginBottom: 6,
                 }}

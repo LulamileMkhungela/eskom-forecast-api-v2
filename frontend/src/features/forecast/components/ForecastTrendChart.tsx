@@ -40,6 +40,15 @@ import {
   useForecastChart,
 } from "../hooks/useForecast";
 
+
+import {
+  cardBorderColor,
+  cardFill,
+  hairline,
+  neutralFill,
+  softBorder,
+} from "../../../theme/surfaces";
+
 interface ForecastTrendChartProps {
   filters: ForecastFilters;
 }
@@ -113,9 +122,8 @@ const ForecastTooltip = ({
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        border:
-          "1px solid #E1E6EF",
+        bgcolor: "transparent",
+        border: softBorder,
         borderRadius: 2.5,
         px: 2,
         py: 1.5,
@@ -429,9 +437,8 @@ const ForecastTrendChart = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E3E8EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           p: {
             xs: 2.5,
@@ -510,9 +517,8 @@ const ForecastTrendChart = ({
     return (
       <Box
         sx={{
-          bgcolor: "#FFFFFF",
-          border:
-            "1px solid #E3E8EF",
+          bgcolor: "transparent",
+          border: softBorder,
           borderRadius: 4,
           minHeight: 520,
           display: "flex",
@@ -576,10 +582,10 @@ const ForecastTrendChart = ({
       sx={{
         width: "100%",
         height: "100%",
-        bgcolor: "background.paper",
+        bgcolor: cardFill,
         border: "1px solid",
-        borderColor: "divider",
-        borderRadius: 12,
+        borderColor: cardBorderColor,
+        borderRadius: "12px",
         overflow: "hidden",
         boxShadow: (t) =>
           t.palette.mode === "dark"
@@ -791,8 +797,7 @@ const ForecastTrendChart = ({
             px: 1.75,
             py: 1.5,
             borderRadius: 2.5,
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
           }}
         >
           <Typography
@@ -842,8 +847,7 @@ const ForecastTrendChart = ({
             px: 1.75,
             py: 1.5,
             borderRadius: 2.5,
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
           }}
         >
           <Typography
@@ -893,8 +897,7 @@ const ForecastTrendChart = ({
             px: 1.75,
             py: 1.5,
             borderRadius: 2.5,
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
           }}
         >
           <Typography
@@ -953,8 +956,7 @@ const ForecastTrendChart = ({
             px: 1.75,
             py: 1.5,
             borderRadius: 2.5,
-            bgcolor:
-              "#F7F9FC",
+            bgcolor: neutralFill,
           }}
         >
           <Typography
@@ -1283,8 +1285,7 @@ const ForecastTrendChart = ({
             xs: 2.5,
             md: 4,
           },
-          borderTop:
-            "1px solid #E3E8EF",
+          borderTop: hairline,
           py: 2.5,
           display: "flex",
           justifyContent:

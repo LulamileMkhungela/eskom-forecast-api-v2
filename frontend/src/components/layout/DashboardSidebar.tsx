@@ -1,9 +1,6 @@
 import {
   ChevronLeftRounded,
   ChevronRightRounded,
-  LogoutRounded,
-  SettingsRounded,
-  SupportAgentRounded,
 } from "@mui/icons-material";
 
 import {
@@ -44,6 +41,8 @@ const DashboardSidebar = ({
 }: DashboardSidebarProps) => {
   return (
     <Box
+      className="eskom-sidebar"
+      component="nav"
       sx={{
         width: collapsed ? 84 : 268,
         height: "100vh",
@@ -53,6 +52,14 @@ const DashboardSidebar = ({
         bgcolor: "#0A1C38",
         color: "#fff",
         borderRight: "1px solid rgba(255,255,255,0.08)",
+
+        /*
+         * The rail is a full-height panel flush with the window edge —
+         * it must stay square. (A global CSS rule used to force a 12px
+         * radius on every emotion-styled div, which rounded it.)
+         */
+        borderRadius: 0,
+
         transition: "width .28s cubic-bezier(0.16,1,0.3,1)",
         overflow: "hidden",
         position: "sticky",

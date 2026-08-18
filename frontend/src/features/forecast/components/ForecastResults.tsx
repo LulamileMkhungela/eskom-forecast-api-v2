@@ -22,6 +22,12 @@ import {
 } from "../hooks/useForecast";
 
 
+
+import {
+  hairline,
+  neutralFill,
+} from "../../../theme/surfaces";
+
 interface ForecastResultsProps {
   filters: ForecastFilters;
 }
@@ -434,16 +440,14 @@ const ForecastResults = ({
 
             "& th": {
               textAlign: "left",
-              backgroundColor:
-                "#F7F9FC",
+              backgroundColor: neutralFill,
               color:
                 "#475569",
               fontSize: 13,
               fontWeight: 700,
               padding:
                 "16px 18px",
-              borderBottom:
-                "1px solid #E5EAF0",
+              borderBottom: hairline,
               whiteSpace:
                 "nowrap",
             },
@@ -451,8 +455,7 @@ const ForecastResults = ({
             "& td": {
               padding:
                 "17px 18px",
-              borderBottom:
-                "1px solid #EEF1F5",
+              borderBottom: hairline,
               color:
                 "text.primary",
               fontSize: 14,
@@ -461,8 +464,7 @@ const ForecastResults = ({
             },
 
             "& tbody tr:hover": {
-              backgroundColor:
-                "#FAFBFD",
+              backgroundColor: neutralFill,
             },
 
             "& tbody tr:last-child td": {
