@@ -1,148 +1,64 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import ForecastContextBar from "../../../components/forecast/ForecastContextBar";
 
-import InferenceStatistics from "../components/InferenceStatistics";
-import PipelineStatus from "../components/PipelineStatus";
-import ResourceLogs from "../components/ResourceLogs";
-import ApiMetrics from "../components/ApiMetrics";
-import InferenceHistory from "../components/InferenceHistory";
-import ErrorMonitor from "../components/ErrorMonitor";
+/*
+ * MOCK UI COMMENTED OUT — these components use hardcoded arrays
+ * (Healthy, 10 min, 12,540 requests, fake pipeline times).
+ *
+ * Live ops UI is /inference-monitoring:
+ *   GET /api/inference-monitoring
+ *   GET /api/inference-monitoring/summary
+ *   POST /api/run-forecast
+ *
+ * Uncomment the blocks below ONLY after data engineering exposes
+ * dedicated endpoints for this page (or after you rewire each
+ * component to the monitoring APIs above).
+ *
+ * import InferenceStatistics from "../components/InferenceStatistics";
+ * import PipelineStatus from "../components/PipelineStatus";
+ * import ResourceLogs from "../components/ResourceLogs";
+ * import ApiMetrics from "../components/ApiMetrics";
+ * import InferenceHistory from "../components/InferenceHistory";
+ * import ErrorMonitor from "../components/ErrorMonitor";
+ */
 
-
-/** ROUTE /inference. Children InferenceStatistics/Pipeline/ApiMetrics/History/ErrorMonitor are MOCK. Use /inference-monitoring for live ops. */
+/** ROUTE /inference. Only dynamic chrome (context bar) is shown. */
 const InferencePage = () => {
-
   return (
-
     <Stack
       spacing={4}
       sx={{
-        pb:4,
+        pb: 4,
       }}
     >
-
-
-      {/*
-        Shared forecast context.
-
-        Keeps the same selection
-        across Forecast,
-        Model Performance,
-        and Inference.
-
-        Controls:
-        - Horizon
-        - Station
-        - Scenario
-        - Forecast type
-      */}
       <ForecastContextBar />
 
-
-
-      {/*
-        System health summary.
-
-        Shows:
-
-        - API availability
-        - Data pipeline status
-        - Model service status
-        - Last successful inference
-      */}
-      <InferenceStatistics />
-
-
+      <Typography color="text.secondary">
+        This page no longer renders mock health / pipeline / API metrics.
+        Use Inference Monitoring for live run, latency and resource data
+        (GET /api/inference-monitoring/summary).
+      </Typography>
 
       {/*
-        Pipeline execution visibility.
+        MOCK — uncomment when DE wires real APIs (or point these
+        components at /api/inference-monitoring/summary):
+        - InferenceStatistics: needs health, last-run timestamp
+        - PipelineStatus: needs per-step pipeline events
+        - ResourceLogs: needs resource activity stream
+        - ApiMetrics: needs request volume / latency (not in current API)
+        - InferenceHistory: needs run list (summary.runs already exists)
+        - ErrorMonitor: needs failed/warning events (already on monitoring)
 
-        Shows the journey:
-
-        Data ingestion
-              ↓
-        Feature processing
-              ↓
-        Model execution
-              ↓
-        Prediction generation
-              ↓
-        Storage update
-
+        <InferenceStatistics />
+        <PipelineStatus />
+        <ResourceLogs />
+        <ApiMetrics />
+        <InferenceHistory />
+        <ErrorMonitor />
       */}
-      <PipelineStatus />
-
-
-
-      {/*
-        Resource interaction monitoring.
-
-        Answers:
-
-        "What happened between
-         the application and external resources?"
-
-        Examples:
-
-        Azure Storage
-        Weather API
-        Database
-        Model Service
-
-      */}
-      <ResourceLogs />
-
-
-
-      {/*
-        API behaviour monitoring.
-
-        Shows:
-
-        - Request volume
-        - Response times
-        - Failures
-        - Success rate
-
-      */}
-      <ApiMetrics />
-
-
-
-      {/*
-        Inference execution history.
-
-        Provides audit trail:
-
-        - Run ID
-        - Model version
-        - Duration
-        - Status
-
-      */}
-      <InferenceHistory />
-
-
-
-      {/*
-        Error monitoring.
-
-        Shows:
-
-        - Failed operations
-        - Error messages
-        - Resolution status
-
-      */}
-      <ErrorMonitor />
-
-
     </Stack>
-
   );
-
 };
-
 
 export default InferencePage;

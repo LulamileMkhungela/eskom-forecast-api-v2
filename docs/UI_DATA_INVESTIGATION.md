@@ -37,6 +37,25 @@ Response shape: `{ daily: ForecastRecord[], monthly: ForecastRecord[] }` plus we
 
 ---
 
+## What data engineering must deliver before we uncomment mock UI
+
+Mock widgets are **commented out of the rendered tree** so the UI only shows live APIs. Uncomment only after these exist and the component is wired to them.
+
+| Hidden mock | File | Need from DE / backend |
+|---|---|---|
+| Dashboard KPIs 96.8% / 36,120 MW / 35,080 MW / 4.2 s | `DashboardKPIs.tsx` | Accuracy, peak demand, generation, latency — **no endpoint today** |
+| Station Health 47 200 MW / 96.8% | `StationHealth.tsx` | Capacity, units running, coal days |
+| Dashboard Weather 24°C | `dashboard/WeatherSummary.tsx` | Already have `GET /api/weather-data` — rewire, do not invent |
+| Inference Statistics / Pipeline / Logs / ApiMetrics / History / Errors | `/inference` children | Prefer existing `GET /api/inference-monitoring/summary` (runs, health, resources). ApiMetrics volume/latency still missing |
+| ForecastHeader 96.8% / Last Run 09:42 | unused | `r2` from `/api/forecast-metrics` + `latest_run` from monitoring summary |
+| ForecastHistory / ForecastTable | unused | scenario-data already can replace table; no run-history API for fake Kendal rows |
+| ModelPerformanceStatistics / AccuracyTrend / ModelComparison / ErrorAnalysis / PerformanceHistory | unused | `/api/forecast-metrics` already covers KPIs. Need `/api/accuracy-trend`, `/api/model-versions`, `/api/error-analysis`, `/api/evaluation-runs` if those UIs come back |
+| Per-step accuracy matrix | not used | `GET /api/forecast-metrics-by-step` **already exists** — wire `ModelAccuracyMatrix` if wanted |
+
+**Already live — do not wait on DE:** Forecast Overview, Model Performance page (RMSE/MAE/NRMSE/R², OOT, cumulative), Inference Monitoring, weather intelligence, station fleet.
+
+---
+
 ## Recommendations (do these next)
 
 1. **Never default to `entity_1`.** Done in `ForecastContext.tsx` (`DEFAULT_ENTITY_ID = ""`). Context bar already assigns the first Gold id. After reload, KPIs should show Lethabo (or first id) numbers, not 0.00.

@@ -14,7 +14,12 @@ import {
   Typography,
 } from "@mui/material";
 
-/** UNUSED on ForecastPage. Chips 96.8% / Last Run 09:42 / Engine Online are MOCK. */
+/**
+ * MOCK — not mounted. Do not import until DE provides:
+ *   accuracy ← GET /api/forecast-metrics (r2)
+ *   last run ← GET /api/inference-monitoring/summary latest_run
+ *   engine status ← same summary.health
+ */
 const ForecastHeader = () => {
   return (
     <Paper

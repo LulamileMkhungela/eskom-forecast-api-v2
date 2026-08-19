@@ -11,7 +11,7 @@ import {
 import StatCard from "../../../components/common/StatCard";
 
 
-/** MOCK — all four StatCard values are literals. Live RMSE/MAE live in ModelPerformanceKPIs via GET /api/forecast-metrics. */
+/** MOCK unused. Live KPIs are ModelPerformanceKPIs → GET /api/forecast-metrics. Uncomment/import only after DE confirms this card set is needed (it duplicates live RMSE/MAE). */
 const ModelPerformanceStatistics = () => {
 
   return (
