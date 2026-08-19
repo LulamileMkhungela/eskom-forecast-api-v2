@@ -321,6 +321,7 @@ const ForecastInsights = ({
    * --------------------------------------------------------
    */
 
+  /* DYNAMIC from GET /api/scenario-data via useForecastChart. Not mock. */
   const averageBurn =
     burnValues.length > 0
       ? burnValues.reduce(

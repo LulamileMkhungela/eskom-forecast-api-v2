@@ -11,6 +11,20 @@ import {
 } from "../types/forecast.types";
 
 
+/**
+ * DATA SOURCE (DYNAMIC — no mock series)
+ * --------------------------------------
+ * All numbers on Forecast cards are derived from GET /api/scenario-data
+ * (Gold parquet: {daily,monthly}/scenario_predictions.parquet via src/ui.py
+ * get_scenario_predictions_json). There is no dedicated KPI endpoint.
+ *
+ * GET /api/forecast-data exists (baseline predictions.parquet) but this
+ * service does not use it for dashboard cards — charts/stats/entities all
+ * go through scenario-data so Baseline + what-if share one payload.
+ *
+ * Exposed to the UI after client-side filter/aggregate:
+ *   average, peak, projectedVolume, horizon (count), Input/Replenishment/Stockpile series.
+ */
 class ForecastService {
   private readonly baseUrl = "/api";
 

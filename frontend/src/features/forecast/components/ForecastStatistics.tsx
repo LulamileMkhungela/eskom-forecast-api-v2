@@ -32,6 +32,14 @@ import { useForecastContext } from "../../../contexts/ForecastContext";
  * geometry: same padding, same 46px tinted icon tile in the top
  * right, same value baseline and the same sparkline slot.
  */
+/**
+ * DATA: DYNAMIC (client aggregate of GET /api/scenario-data).
+ * Not mock. Values change with Horizon / Metric / Power Station / Scenario.
+ * Average Forecast = mean of selected metric (Input|Replenishment|Stockpile).
+ * Peak Forecast = max of same series.
+ * Projected Volume = sum of series.
+ * Forecast Horizon = record count (days or months), not a backend field.
+ */
 const ForecastStatistics = () => {
   const { horizon, metric, entityId, scenario } = useForecastContext();
 

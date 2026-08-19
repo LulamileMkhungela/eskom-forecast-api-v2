@@ -415,6 +415,10 @@ const ScenarioComparison = ({
           Number.isFinite(value)
       );
 
+  /* DYNAMIC: Baseline Average / scenario average / Scenario Impact
+   * from GET /api/scenario-data. Baseline = scenario_id === "actual".
+   * Scenario series = mapped filter (hotdry → weather_hot_dry, …).
+   * Impact = (scenarioAvg - baselineAvg) / |baselineAvg| * 100. Not mock. */
   const baselineAverage =
     validBaseline.length > 0
       ? validBaseline.reduce(

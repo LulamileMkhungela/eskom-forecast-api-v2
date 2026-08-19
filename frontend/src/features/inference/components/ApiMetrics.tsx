@@ -15,6 +15,7 @@ import StatCard from "../../../components/common/StatCard";
 
 
 
+/** MOCK — hardcoded request counts/latency. Live ops KPIs are Inference Monitoring → GET /api/inference-monitoring/summary. */
 const ApiMetrics = () => {
 
 

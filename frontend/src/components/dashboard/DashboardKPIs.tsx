@@ -9,6 +9,7 @@ import {
 
 import StatCard, { StatCardProps } from "../common/StatCard";
 
+/* MOCK / HARDCODED — not wired to /api. Do not treat as live forecast KPIs. */
 const kpis: StatCardProps[] = [
   {
     title: "Forecast Accuracy",

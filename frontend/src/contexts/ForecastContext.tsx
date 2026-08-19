@@ -56,6 +56,7 @@ interface ForecastProviderProps {
   children: ReactNode;
 }
 
+/* Defaults are hardcoded UI state only; they do not come from an API. */
 const DEFAULT_HORIZON: ForecastHorizon =
   "daily";
 

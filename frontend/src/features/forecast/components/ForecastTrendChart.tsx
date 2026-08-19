@@ -324,11 +324,13 @@ const ForecastTrendChart = ({
 
   /*
    * =========================================================
-   * BURN STATISTICS
+   * BURN STATISTICS — DYNAMIC, not mock
    * =========================================================
-   *
-   * The headline KPIs describe Burn because this is the
-   * main forecast shown by this component.
+   * Source: same GET /api/scenario-data records as ForecastStatistics
+   * (filtered by horizon, entity, scenario). Burn = record.Input.
+   * Average Burn / Peak Burn / Horizon Trend / Periods / Lowest /
+   * Avg Supply are computed here in the browser. Labels "t/day" are
+   * hardcoded even on monthly horizon (display only).
    */
 
   const burnValues: number[] =

@@ -52,12 +52,14 @@ interface ForecastContextBarProps {
  * FORECAST CONTEXT BAR
  * =====================================================
  *
- * Global dashboard controls:
+ * Global dashboard controls (filter OPTIONS vs VALUES):
  *
- * - Horizon
- * - Metric
- * - Power Station
- * - Scenario
+ * - Horizon  — HARDCODED options: daily | monthly. Selected value is state only.
+ * - Metric   — HARDCODED options: burn | supply | stockpile. Maps to Input /
+ *              Replenishment / Stockpile on GET /api/scenario-data records.
+ * - Power Station — DYNAMIC options from unique entity_id on GET /api/scenario-data.
+ * - Scenario — HARDCODED option ids (actual, hotdry, …) mapped to backend
+ *              scenario_id (actual, weather_hot_dry, …). Data itself is dynamic.
  *
  * Behaviour:
  *

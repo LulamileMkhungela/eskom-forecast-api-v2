@@ -14,6 +14,8 @@ import {
 
 import forecastService from "../../features/forecast/service/forecast.service";
 
+/** DYNAMIC: Peak/Average from forecastService.getStatistics → /api/scenario-data.
+ *  Forecast Horizon label here is the filter string (Daily/Monthly), not record count. */
 const ForecastMetrics = () => {
   const {
     horizon,
