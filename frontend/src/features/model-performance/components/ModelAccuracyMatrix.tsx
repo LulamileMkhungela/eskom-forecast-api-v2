@@ -63,6 +63,10 @@ type Status =
 
 
 
+/**
+ * DYNAMIC: GET /api/forecast-metrics (same as KPIs), NOT /api/forecast-metrics-by-step.
+ * Cells = rmse/mae/smape|r2/nrmse per entity × target. Stations from metrics entity_id.
+ */
 const ModelAccuracyMatrix = ({
   horizon,
   entityId,

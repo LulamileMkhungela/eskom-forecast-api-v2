@@ -1,203 +1,295 @@
-# UI data investigation — dynamic vs hardcoded
+# Complete Element-by-Element Data Source Investigation
 
-Audit date: 2026-08-19. Scope: every Forecast page filter/card/text plus related dashboard, model-performance, and inference screens. Goal: say for each element **where the number comes from**, **which API/service**, **what we expose**, and **whether it is live or mock**.
-
-## How the live forecast path works
-
-There is **no mock forecast series** on the Forecast page. There is also **no backend KPI endpoint** for Average Burn / Peak / Volume. The UI:
-
-1. Calls `GET /api/scenario-data` (`ForecastService.getScenarioData`).
-2. Backend `main.py` → `src/ui.py` `get_scenario_predictions_json()` reads Gold parquet `{daily,monthly}/scenario_predictions.parquet` (Azure blob or local `config.local_gold_dir`).
-3. Each record has `entity_id`, `event_date`, `horizon_step`, `scenario_id`, `Input` (burn), `Replenishment` (supply), `Stockpile`, `label`.
-4. Frontend filters by horizon (daily vs monthly array), `scenario_id` (mapped from the Scenario dropdown), and `entity_id`.
-5. Cards **recompute** mean / max / sum / count / % delta in the browser.
-
-`GET /api/forecast-data` exists (`get_predictions_json` → `{daily,monthly}/predictions.parquet`) but **Forecast cards do not use it**. Entities, charts, and stats all go through scenario-data so Baseline and what-if share one payload.
-
-Weather: `GET /api/weather-data?entity_id=` → Open-Meteo cache (`src/ui.py` `get_weather_json` / `training/weather.py`). Not mock.
-
-Model metrics (when wired): `GET /api/forecast-metrics`, `GET /api/forecast-metrics-by-step`, `GET /api/oot-history` from metrics parquet.
-
-Ops: `GET /api/inference-monitoring`, `GET /api/inference-monitoring/summary`, `POST /api/run-forecast`.
+**Date:** 19 August 2026  
+**Scope:** Every Forecast page element + every Model Performance page element  
+**Method:** Read `main.py`, `src/ui.py`, `docs/ARCHITECTURE.md`, and each TSX/service file.  
+**This file corrects a common mistake:** there is **no** `GET /api/entities` in this repo.
 
 ---
 
-## Forecast Context bar (filters)
+## How live forecast data actually works
 
-File: `frontend/src/components/layout/ForecastContextBar.tsx`  
-State: `frontend/src/contexts/ForecastContext.tsx` (defaults **hardcoded**: `daily`, `burn`, `entity_1`, `actual`)
+1. Frontend `ForecastService` calls **`GET /api/scenario-data`** (`forecast.service.ts`).
+2. `main.py` `scenario_data()` → `src/ui.py` `get_scenario_predictions_json()`.
+3. Reads Gold parquet `{daily,monthly}/scenario_predictions.parquet` (Azure or local gold dir).
+4. Records: `entity_id`, `event_date`, `horizon_step`, `scenario_id`, `Input` (burn), `Replenishment` (supply), `Stockpile`, `label`.
+5. Frontend filters by horizon array, mapped `scenario_id`, `entity_id`, then **computes** mean / max / sum / count / % in the browser.
 
-| Control | Options source | Selected value | Affects live data? |
+`GET /api/forecast-data` exists (`predictions.parquet`) but **Forecast cards/charts do not call it**.
+
+Power stations are **not** a dedicated API. `getEntities()` unique-sorts `entity_id` from the **same** `scenario-data` payload.
+
+---
+
+## Backend APIs that exist (`main.py`)
+
+| Method | Path | Backend | What it exposes |
 |---|---|---|---|
-| **Horizon** | **Hardcoded** menu: Tactical Daily / Strategic Monthly | React state | Yes — picks `scenarioData.daily` vs `.monthly` |
-| **Metric** | **Hardcoded** menu: Burn / Supply / Stockpile | React state | Yes — maps to `Input` / `Replenishment` / `Stockpile` |
-| **Power Station** | **Dynamic** unique `entity_id` from `GET /api/scenario-data` via `useForecastEntities` | React state | Yes — record filter (or all-station sum) |
-| **Scenario** | **Hardcoded** ids: `actual`, `hotdry`, `hotwet`, `colddry`, `coldwet` mapped to backend `actual`, `weather_hot_dry`, … | React state | Yes — `scenario_id` filter |
-| Export CSV | Action only | Uses current filters | Writes whatever filtered records are |
-| Reset | Action | Restores defaults / first entity | — |
-| Title / subtitle | Hardcoded copy | — | — |
+| GET | `/api/scenario-data` | `get_scenario_predictions_json` | `{ daily, monthly }` scenario forecasts — **primary Forecast UI** |
+| GET | `/api/forecast-data` | `get_predictions_json` | `{ daily, monthly }` baseline predictions — **unused by Forecast service** |
+| GET | `/api/weather-data` | `get_weather_json` | daily weather series (Open-Meteo cache) |
+| GET | `/api/forecast-metrics` | `get_metrics_json` | RMSE/MAE/SMAPE/R2/NRMSE per entity/target |
+| GET | `/api/forecast-metrics-by-step` | `get_metrics_by_step_json` | per-step metrics — **not used by ModelAccuracyMatrix** |
+| GET | `/api/oot-history` | `get_oot_history_json` | actual vs predicted history |
+| GET | `/api/inference-monitoring` | event log | raw events |
+| GET | `/api/inference-monitoring/summary` | computed in `main.py` | ops KPIs |
+| POST | `/api/run-forecast` | pipeline | trigger |
+| GET | `/healthz` | — | health |
 
-Finding: filter **labels** are static product copy. Station **list** is live. Filter **values** only change which backend rows are aggregated — they are not themselves API fields.
+**Does not exist:** `/api/entities`, `/api/accuracy-trend`, `/api/model-versions`.
 
----
-
-## Forecast KPI row
-
-File: `ForecastStatistics.tsx` → `useForecastStatistics` → `ForecastService.getStatistics`
-
-| Card | Dynamic? | Formula | API | Exposed fields |
-|---|---|---|---|---|
-| **Average Forecast** | **Yes** | mean(metric series) | `GET /api/scenario-data` then client mean | `average` |
-| **Peak Forecast** | **Yes** | max(metric series) | same | `peak` |
-| **Projected Volume** | **Yes** | sum(metric series) | same | `projectedVolume` |
-| **Forecast Horizon** | **Yes (count)** | `records.length` | same | `horizon` (integer days/months, **not** the filter enum) |
-| Sparkline | **Yes** | same series | same | — |
-| Units / subtitles | Hardcoded templates | `t/day` vs `tonnes` from filter | — | — |
-
-Empty series → zeros. Error card is static copy.
-
-Legacy/alternate: `components/dashboard/ForecastMetrics.tsx` — same `getStatistics` (metric forced to burn). Its “Forecast Horizon” text is the **filter label** Daily/Monthly, not the count. `ForecastTrend.tsx` has another Average/Peak/Horizon strip from the same hook.
+Docs folder (`ARCHITECTURE.md`, `RUNBOOK.md`) describes AKS/SQL/blob topology, not UI mock vs live. Gold/metrics parquet is model output, not React fixtures.
 
 ---
 
-## Forecast Trend chart strip
+## SECTION 1 — Forecast Context bar
 
-File: `ForecastTrendChart.tsx` → `useForecastChart` → same filtered `scenario-data` rows. Burn always `Input`; supply always `Replenishment` (stockpile **not** plotted here even if Metric=stockpile).
+**File:** `frontend/src/components/layout/ForecastContextBar.tsx`  
+**State:** `ForecastContext.tsx` defaults **hardcoded**: `daily`, `burn`, `entity_1`, `actual`.
 
-| Element | Dynamic? | Formula |
+### 1.1 Horizon
+
+- Options **hardcoded**: Tactical (Daily) / Strategic (Monthly).
+- Selection is React state. No API.
+- Effect: picks `scenarioData.daily` vs `.monthly`.
+- Status: dynamic **selection**, static **labels**. Acceptable.
+
+### 1.2 Metric
+
+- Options **hardcoded**: Burn / Supply / Stockpile Predictions.
+- Maps to `Input` / `Replenishment` / `Stockpile`.
+- Status: dynamic selection, static labels.
+
+### 1.3 Power Station
+
+- Options **dynamic**: unique `entity_id` from `GET /api/scenario-data` via `useForecastEntities()` → `forecastService.getEntities()` (client extract, **not** `/api/entities`).
+- Labels = raw ids.
+- Default `entity_1` is hardcoded; bar replaces it with first real id if missing.
+- Status: **dynamic list**.
+
+### 1.4 Scenario
+
+- Options **hardcoded** ids: `actual`, `hotdry`, `hotwet`, `colddry`, `coldwet`.
+- Mapped in service: `actual` → `actual`, `hotdry` → `weather_hot_dry`, etc.
+- Data rows for those ids are **dynamic** in parquet.
+- New backend scenario_id will not appear until the menu is updated.
+
+Export CSV / Reset: actions. Titles: static copy.
+
+---
+
+## SECTION 2 — Average Forecast / Peak / Volume / Horizon (KPI row)
+
+**File:** `ForecastStatistics.tsx` → `useForecastStatistics` → `getStatistics`.
+
+| Card | Dynamic? | Formula | API |
+|---|---|---|---|
+| **Average Forecast** | Yes | mean(metric series) | `GET /api/scenario-data` then client |
+| **Peak Forecast** | Yes | max(series) | same |
+| **Projected Volume** | Yes | sum(series) | same |
+| **Forecast Horizon** | Yes (count) | `records.length` | same — **not** the filter enum |
+| Sparkline | Yes | same series | same |
+| Titles / colours / icons | Hardcoded UI | — | — |
+| Units | Filter-driven | t/day vs tonnes | — |
+
+Empty → zeros. Error card is static text.
+
+Legacy `components/dashboard/ForecastMetrics.tsx`: same `getStatistics` (metric forced burn). Its “Forecast Horizon” is the **filter word** Daily/Monthly, not the count.
+
+---
+
+## SECTION 3 — Average Burn, Peak Burn, Horizon Trend, Periods
+
+**File:** `ForecastTrendChart.tsx` → `useForecastChart` → same filtered `scenario-data`.
+
+Always plots **burn = Input**, **supply = Replenishment**. Ignores Metric=stockpile for the lines.
+
+| Element | Dynamic? | Formula / source |
 |---|---|---|
-| Title “Tactical Daily / Strategic Monthly Burn Forecast” | Horizon filter only | Hardcoded strings + filter |
-| Days/Months badge | **Yes** | `chartData.length` |
-| “Forecast Generated” badge | **Hardcoded** label | Not a backend status |
-| Chart type toggle | Local UI state | — |
-| Chart lines Burn / Supply | **Yes** | `Input`, `Replenishment` |
+| Title Tactical Daily / Strategic Monthly Burn Forecast | Horizon filter + hardcoded “Burn Forecast” | — |
+| Subtitle | Hardcoded copy | — |
+| Days/Months badge | Yes | `chartData.length` |
+| “Forecast Generated” | **Hardcoded badge** | not a backend status |
+| Chart type toggle | Local UI | — |
+| Burn line | Yes | `Input` |
+| Supply line | Yes | `Replenishment` |
 | **Average Burn** | **Yes** | mean(Input) |
 | **Peak Burn** | **Yes** | max(Input) |
-| **Horizon Trend** | **Yes** | (last−first)/|first| × 100 |
-| **Periods** | **Yes** | point count |
-| Lowest Projected | **Yes** | min(Input) |
-| Avg Supply | **Yes** | mean(Replenishment) |
-| Peak Projected + date | **Yes** | max(Input) + that date |
-| Unit “t/day” | **Hardcoded** even on monthly | Display only |
+| **Horizon Trend** | **Yes** | (last−first)/|first| × 100 + increase/decrease |
+| **Periods** | **Yes** | `chartData.length` |
+| Lowest Projected | Yes | min(Input) |
+| Avg Supply | Yes | mean(Replenishment) |
+| Peak Projected + date | Yes | max(Input) + date |
+| Unit **t/day** | **Hardcoded even on monthly** | display only |
 
 No mock arrays in this file.
 
 ---
 
-## Scenario Comparison
+## SECTION 4 — Baseline Average, Actual, Scenario Impact, Scenario Average
 
-File: `ScenarioComparison.tsx` → `forecastService.getScenarioData()` (`GET /api/scenario-data`). Duplicate logic also in `ScenarioTrendChart.tsx`.
+**File:** `ScenarioComparison.tsx` (duplicate UI in `ScenarioTrendChart.tsx`).
 
-| Element | Dynamic? | Source |
-|---|---|---|
-| Periods count | **Yes** | unique dates after join |
-| **Baseline Average** | **Yes** | mean of metric where `scenario_id === "actual"` |
-| Selected scenario average (label Actual / Hot & Dry / …) | **Yes** | mean of mapped `scenario_id` |
-| **Scenario Impact** | **Yes** | % vs baseline |
-| Chart baseline vs scenario | **Yes** | same rows |
-| Footer Baseline / Scenario Average | **Yes** | same means |
-| Scenario colour/label maps | Hardcoded | presentation |
+`GET /api/scenario-data`. Baseline = `scenario_id === "actual"`. Scenario = mapped filter id.
 
-If Scenario filter is already Baseline (`actual`), both series are the same actual rows — impact ~0. Not mock.
-
----
-
-## Forecast Insights
-
-File: `ForecastInsights.tsx` → `useForecastChart` (`scenario-data`).
-
-| Card / text | Dynamic? |
+| Element | Dynamic? |
 |---|---|
-| Peak Burn | **Yes** max(Input) |
-| Peak vs Average | **Yes** % |
-| Lowest Stockpile | **Yes** min(Stockpile) |
-| Stockpile Risk | **Yes** count of Stockpile < 0 |
-| Narrative “average burn of X / highest Y” | **Yes** |
-| Operational attention banner | **Yes** from negative period count |
+| Periods badge | Yes — unique dates |
+| **Baseline Average** | Yes — mean of metric on actual |
+| Selected scenario value (label Actual / Hot & Dry / …) | Yes — mean on that `scenario_id` |
+| **Scenario Impact** | Yes — % vs baseline |
+| Chart baseline vs scenario | Yes |
+| Footer Baseline Average / {Scenario} Average | Yes — same means |
+| Colour/label maps | Hardcoded presentation |
+
+If Scenario filter is already Baseline, both series are actual → impact ~0. Still live, not mock.
+
+OOT **Actual** / **Actual Average** are **not** on this card. They are on Model Performance (`Input_actual` etc. from `/api/oot-history`).
 
 ---
 
-## Other Forecast page widgets
+## SECTION 5 — Forecast Insights
+
+**File:** `ForecastInsights.tsx` → `useForecastChart`.
+
+| Element | Dynamic? |
+|---|---|
+| Peak Burn | Yes max(Input) |
+| Peak vs Average | Yes % |
+| Lowest Stockpile | Yes min(Stockpile) |
+| Stockpile Risk | Yes count Stockpile < 0 |
+| Narrative average/peak burn | Yes |
+| Operational banner | Yes from negative count |
+
+Stations via `useForecastEntities()` (same scenario-data extract).
+
+---
+
+## SECTION 6 — Other Forecast widgets (mounted on `ForecastOverview`)
 
 | Widget | File | Dynamic? | API |
 |---|---|---|---|
-| Weather Intelligence / Outlook / Signals | `WeatherIntelligence.tsx` + `weather.service.ts` | **Yes** (aggregates in FE) | `GET /api/weather-data` |
-| Stockpile Trajectory | `StockpileTrajectory.tsx` | **Yes** Stockpile series | `scenario-data` |
-| Station Fleet | `StationFleetOverview.tsx` | **Yes** entities + sums | `scenario-data` |
-| Weather Correlation | `WeatherCorrelation.tsx` | **Yes** aligned dates | `weather-data` + forecast records |
-| Export | `ExportForecast.tsx` | **Yes** filtered rows | `scenario-data` |
-| Forecast History | `ForecastHistory.tsx` | **MOCK** Kendal/Matimba rows | unused / not on overview |
-| Forecast Table “Arnot • …” | `ForecastTable.tsx` | mixed — table can bind records; some header copy hardcoded | — |
-| ForecastHeader “96.8% Accuracy” | `ForecastHeader.tsx` | **MOCK** | — |
+| Weather Intelligence | `WeatherIntelligence.tsx` | Yes (FE aggregates) | `GET /api/weather-data` |
+| Weather Summary / Outlook / Signals | those files | Yes | weather-data |
+| Stockpile Trajectory | `StockpileTrajectory.tsx` | Yes Stockpile series | scenario-data |
+| Station Fleet | `StationFleetOverview.tsx` | Yes ids + avg Input/Replenishment (`actual`) | scenario-data |
+| Weather Correlation | `WeatherCorrelation.tsx` | Yes | weather + forecast dates |
+| Export | `ExportForecast.tsx` | Yes filtered rows | scenario-data |
+
+There is **no** `CurrentWeather.tsx` / `WeatherForecast.tsx` / `WeatherAlerts.tsx` in this repo.
 
 ---
 
-## Dashboard (non-forecast home)
+## SECTION 7 — Forecast files that are unused / mock
 
-| Element | File | Verdict |
+| File | Verdict |
+|---|---|
+| `ForecastHeader.tsx` | **Not** on ForecastPage. Chips **96.8% Accuracy**, **Last Run • Today 09:42**, **Engine Online** are **MOCK**. |
+| `ForecastHistory.tsx` | Unused. Mock Kendal/Matimba/Medupi/Tutuka. |
+| `ForecastFilterBar.tsx` | Unused. Hardcoded Kendal/Matla/Tutuka/Lethabo. |
+| `ForecastTable.tsx` | Unused. Mock rows + hardcoded “Arnot • …” string. |
+
+`ForecastTrend.tsx` / `ForecastComparison.tsx` / `ForecastResults.tsx` / `ForecastChart.tsx` bind `scenario-data` if mounted; Overview uses TrendChart + ScenarioComparison, not all of these.
+
+---
+
+## SECTION 8 — Model Performance (active page)
+
+**Page:** `ModelPerformancePage.tsx` mounts: Context bar + Evaluation View + `ModelPerformanceKPIs` + `OotPerformanceChart` + `CumulativeBurnHistory` + `ModelAccuracyMatrix`.
+
+Horizon/metric/station come from the **same ForecastContext**. Horizon toggle **is enabled** (not disabled). Metric maps: burn→Input, supply→Replenishment, stockpile→Stockpile.
+
+### 8.1 ModelPerformanceKPIs (the live KPI row)
+
+**Not** “Model Accuracy 96.8% / MAE 85 / RMSE 120”. Those literals are only on unused `ModelPerformanceStatistics.tsx`.
+
+| Card | Dynamic? | Source |
 |---|---|---|
-| Forecast Accuracy 96.8%, Peak Demand 36,120 MW, Generation 35,080 MW, Execution Time 4.2 s | `DashboardKPIs.tsx` | **MOCK** |
-| StationHealth 96.8% | `StationHealth.tsx` | **MOCK** |
-| ForecastMetrics Average/Peak | `ForecastMetrics.tsx` | **Dynamic** via `scenario-data` |
+| **Average RMSE** | Yes | mean(`rmse`) of `GET /api/forecast-metrics` after entity + horizon filter |
+| **Average MAE** | Yes | mean(`mae`) |
+| **Average NRMSE** | Yes | mean(`nrmse`) + Strong/Review/Attention from thresholds |
+| **Average R²** | Yes | mean(`r2`) |
+| SMAPE | Computed, **hidden** (`display: none`) | `smape` |
+
+Horizon filter uses backend values **`tactical` / `strategic`**, not `daily` / `monthly`.
+
+### 8.2 OotPerformanceChart
+
+- `GET /api/oot-history`.
+- Lines: **Actual** / **Predicted** from `{Input|Replenishment|Stockpile}_actual/_predicted`.
+- Point count badge dynamic.
+- No footer “Actual Average” card in this file (unlike the pasted template).
+
+### 8.3 CumulativeBurnHistory
+
+- Same `/api/oot-history`.
+- Running sum of actual vs predicted for selected metric.
+
+### 8.4 ModelAccuracyMatrix
+
+- **`GET /api/forecast-metrics`**, **not** `/api/forecast-metrics-by-step`.
+- Table: station × Burn/Supply/Stockpile cells RMSE, MAE, SMAPE or R², NRMSE.
+- Station list from metrics `entity_id`.
+- NRMSE colour bands hardcoded thresholds (≤25 / ≤50 / >50).
 
 ---
 
-## Model Performance
+## SECTION 9 — Model Performance unused / mock
 
-| Element | File | Verdict | API |
+| File | Verdict |
+|---|---|
+| `ModelPerformanceStatistics.tsx` | **MOCK** 98.6% / 85 / 120 / 96.8%. Not imported by the page. |
+| `AccuracyTrend.tsx` | Mock monthly accuracy. Unused. |
+| `ModelComparison.tsx` | Mock model versions. Unused. |
+| `ErrorAnalysis.tsx` | Mock weekly errors. Unused. |
+| `PerformanceHistory.tsx` | Mock run list. Unused. |
+| `PowerStationsPage.tsx` | Placeholder title only. |
+
+---
+
+## Requested elements — one-line answers
+
+| Element | Live? | Where | API / field |
 |---|---|---|---|
-| Average RMSE / MAE / NRMSE / R² | `ModelPerformanceKPIs.tsx` | **Dynamic** (when metrics parquet exists) | `GET /api/forecast-metrics` |
-| OOT Actual vs Predicted | `OotPerformanceChart.tsx`, `CumulativeBurnHistory.tsx` | **Dynamic** | `GET /api/oot-history` |
-| Model Accuracy 98.6%, MAE 85, RMSE 120, Confidence 96.8% | `ModelPerformanceStatistics.tsx` | **MOCK** | none |
-| AccuracyTrend / ModelComparison 96.8% | those components | **MOCK** | none |
+| Horizon / Metric / Scenario menus | Options hardcoded; selection live | Context bar | filters scenario-data |
+| Power Station list | Live | Context bar + fleet | unique `entity_id` on scenario-data |
+| Average Forecast | Live | KPI row | mean of Input/Repl/Stock |
+| Peak Forecast | Live | KPI row | max |
+| Projected Volume | Live | KPI row | sum |
+| Forecast Horizon (KPI) | Live count | KPI row | record length |
+| **Average Burn** | Live | Trend strip | mean(Input) |
+| **Peak Burn** | Live | Trend strip + Insights | max(Input) |
+| **Horizon Trend** | Live | Trend strip | first→last % |
+| **Periods** | Live | Trend strip | count |
+| **Baseline Average** | Live | Scenario Comparison | mean where scenario_id=actual |
+| Scenario / “Actual” series | Live | Scenario Comparison | mapped scenario_id |
+| **Scenario Impact** | Live | Scenario Comparison | % vs baseline |
+| Scenario Average | Live | Scenario Comparison footer | mean selected |
+| **Actual** (OOT) | Live | OOT + Cumulative | `*_actual` on oot-history |
+| **Actual Average** | Not a dedicated Forecast card | would be mean of OOT actual | oot-history |
+| Weather tiles | Live | Weather Intelligence | weather-data |
+| Dashboard 96.8% / 36,120 MW | **Mock** | `DashboardKPIs.tsx` | none |
+| Header 96.8% / 09:42 | **Mock** | unused ForecastHeader | none |
+| MP unused 96.8% cards | **Mock** | unused statistics | none |
 
 ---
 
-## Inference / monitoring
+## Code comments added
 
-| Element | Verdict | API |
-|---|---|---|
-| Monitoring summary cards (runs, success, failed, resources) | **Dynamic** | `GET /api/inference-monitoring/summary` |
-| Event / resource tables | **Dynamic** | `GET /api/inference-monitoring` |
-| Run Forecast button | **Dynamic** action | `POST /api/run-forecast` |
-| `ApiMetrics` 12,540 / 99.2% / 320ms | **MOCK** | none |
-| `InferenceHistory` demo rows | **MOCK** (file comments say so) | none |
-| `InferenceStatistics` health copy | mostly static presentation | — |
+`DYNAMIC` / `MOCK` / `DATA SOURCE` notes are on:
+
+- `forecast.service.ts`, `ForecastContext.tsx`, `ForecastContextBar.tsx`
+- `ForecastStatistics.tsx`, `ForecastTrendChart.tsx`, `ScenarioComparison.tsx`, `ForecastInsights.tsx`
+- `ForecastMetrics.tsx`, `DashboardKPIs.tsx`, `ForecastHeader.tsx`, `StationFleetOverview.tsx`
+- `model-performance.service.ts`, `ModelPerformanceKPIs.tsx`, `OotPerformanceChart.tsx`, `CumulativeBurnHistory.tsx`, `ModelAccuracyMatrix.tsx`, `ModelPerformanceStatistics.tsx`
 
 ---
 
-## Backend catalogue (what we expose)
+## Verdict (verify against this, not the pasted template)
 
-| Method | Path | Implementation | Payload |
-|---|---|---|---|
-| GET | `/api/forecast-data` | `get_predictions_json` | `{ daily, monthly }` baseline predictions — **not used by Forecast cards** |
-| GET | `/api/scenario-data` | `get_scenario_predictions_json` | `{ daily, monthly }` **primary Forecast UI source** |
-| GET | `/api/forecast-metrics` | `get_metrics_json` | RMSE/MAE/MAPE/… |
-| GET | `/api/forecast-metrics-by-step` | `get_metrics_by_step_json` | per-step metrics |
-| GET | `/api/oot-history` | `get_oot_history_json` | actual vs predicted history |
-| GET | `/api/weather-data` | `get_weather_json` | daily weather series |
-| GET | `/api/inference-monitoring` | `get_events` | raw events |
-| GET | `/api/inference-monitoring/summary` | computed in `main.py` | dashboard ops summary |
-| POST | `/api/run-forecast` | `_run_monitored_forecast` | trigger |
-| POST | `/api/ingest-bronze-data` | SQL → bronze | ops |
-| POST | `/api/refresh-weather-cache` | Open-Meteo | ops |
-| POST | `/api/initialize` | full pipeline | ops |
-| GET | `/api/initialize-progress` | in-memory | ops |
-| GET | `/api/db-operations` | ingest log | ops |
-| GET | `/healthz` | `{status: ok}` | k8s |
-
-Gold/metrics files are **model output**, not hand-written UI fixtures. `src/generate_mock_data.py` is a pipeline helper, not what the React cards import.
-
----
-
-## Findings / caveats (verify these)
-
-1. **Forecast numbers are live aggregates, not a second mock layer.** If a card looks “wrong”, check parquet + filters, not a JSON fixture.
-2. **KPI formulas live in the browser**, not the API. Two cards can disagree if they use different filters (e.g. Trend strip always burn; Statistics follow Metric).
-3. **Trend chart always plots burn+supply** and always labels **t/day**, ignoring Metric and monthly horizon.
-4. **`/api/forecast-data` is unused** by the current Forecast service.
-5. **Default station `entity_1`** is hardcoded until entities load; bar then snaps to first real id.
-6. **Scenario option list is static**; if Gold gains a new `scenario_id`, the dropdown will not show it until code changes.
-7. **Dashboard home + some Model Performance / Inference cards remain mock** (96.8%, 36,120 MW, 12,540 requests). Do not use those to validate backend pull.
-
-Code comments marked `DYNAMIC` / `MOCK` / `DATA SOURCE` were added on the files above so each element can be verified in-place.
+- **Active Forecast numbers are live client aggregates of `GET /api/scenario-data`.** No mock series on Overview cards.
+- **There is no `/api/entities`.** Stations come from scenario-data `entity_id`.
+- **Active Model Performance KPIs are RMSE/MAE/NRMSE/R² from `GET /api/forecast-metrics`**, not 96.8% mock cards.
+- **OOT Actual vs Predicted is live** from `GET /api/oot-history`.
+- **Hardcoded leftovers:** filter option lists, `entity_1` default, t/day on monthly trend, unused History/Table/FilterBar/Header, unused MP prototypes, Dashboard home KPIs.
+- **`/api/forecast-metrics-by-step` is not wired** to the accuracy matrix (matrix uses overall metrics).

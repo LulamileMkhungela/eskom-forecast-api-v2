@@ -6,6 +6,7 @@ import {
 } from "../types/model-performance.types";
 
 
+/** DYNAMIC: GET /api/forecast-metrics and GET /api/oot-history. No mock in this service. */
 class ModelPerformanceService {
   private readonly baseUrl = "/api";
 

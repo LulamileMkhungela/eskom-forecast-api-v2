@@ -29,6 +29,12 @@ interface ModelPerformanceKPIsProps {
 }
 
 
+/**
+ * DATA: DYNAMIC — GET /api/forecast-metrics (model_metrics.parquet).
+ * Cards are Average RMSE / MAE / NRMSE / R² (client mean after filter).
+ * NOT the unused ModelPerformanceStatistics mock (98.6% / 85 / 120 / 96.8%).
+ * Horizon filter: backend horizon is "tactical"|"strategic", not daily|monthly.
+ */
 const ModelPerformanceKPIs = ({
   horizon,
   entityId,

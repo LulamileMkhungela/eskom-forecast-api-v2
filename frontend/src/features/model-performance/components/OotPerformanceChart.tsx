@@ -130,6 +130,10 @@ interface OotPerformanceChartProps {
  * ======================================================
  */
 
+/**
+ * DYNAMIC: GET /api/oot-history. Actual/Predicted lines from {metric}_actual/_predicted.
+ * Horizon maps daily→tactical, monthly→strategic. No mock series.
+ */
 const OotPerformanceChart = ({
   entityId,
   horizon,

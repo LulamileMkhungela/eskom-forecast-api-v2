@@ -34,6 +34,7 @@ import { useForecastContext } from "../../../contexts/ForecastContext";
  * check icon — so it is obvious which station the rest of the
  * dashboard is showing.
  */
+/** DYNAMIC: station ids + burn/supply averages from GET /api/scenario-data (scenario_id=actual). No /api/entities. */
 const StationFleetOverview = () => {
   const { entityId, setEntityId, horizon, metric } = useForecastContext();
   const { data } = useForecastScenarioData();

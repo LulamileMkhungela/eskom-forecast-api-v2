@@ -135,6 +135,7 @@ interface CumulativeBurnHistoryProps {
  * ======================================================
  */
 
+/** DYNAMIC: GET /api/oot-history; running sum of actual/predicted for selected metric. Not mock. */
 const CumulativeBurnHistory = ({
   entityId,
   horizon,
