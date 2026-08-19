@@ -312,6 +312,11 @@ const getCellColor = (
  * =====================================================
  */
 
+/**
+ * DYNAMIC: Pearson on date-matched GET /api/scenario-data + GET /api/weather-data.
+ * "N matched days" is live. Empty = no overlapping event_date vs weather.date (not mock).
+ * Copy about -1..+1 is hardcoded explanation.
+ */
 const WeatherCorrelation = ({
   filters,
 }: WeatherCorrelationProps) => {

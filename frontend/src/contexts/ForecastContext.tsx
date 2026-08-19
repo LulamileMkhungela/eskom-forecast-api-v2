@@ -56,7 +56,10 @@ interface ForecastProviderProps {
   children: ReactNode;
 }
 
-/* Defaults are hardcoded UI state only; they do not come from an API. */
+/* Defaults are hardcoded UI state only; they do not come from an API.
+ * DEFAULT_ENTITY_ID must stay empty — "entity_1" is not a Gold station
+ * and produced 0.00 KPIs while Station Fleet listed Lethabo/Matimba/…
+ * ForecastContextBar sets the first id from GET /api/scenario-data. */
 const DEFAULT_HORIZON: ForecastHorizon =
   "daily";
 
@@ -64,7 +67,7 @@ const DEFAULT_METRIC: ForecastMetric =
   "burn";
 
 const DEFAULT_ENTITY_ID =
-  "entity_1";
+  "";
 
 const DEFAULT_SCENARIO: ForecastScenario =
   "actual";

@@ -58,6 +58,12 @@ interface StockpileChartPoint {
   stockpile: number;
 }
 
+/**
+ * DYNAMIC: Stockpile series from GET /api/scenario-data (record.Stockpile).
+ * Days-of-supply = Stockpile / mean(Input). Unit toggle is local UI.
+ * Empty / "Unable to load station information" = no rows for selected entityId
+ * (e.g. leftover entity_1), not mock chart data.
+ */
 const StockpileTrajectory = ({
   filters,
 }: StockpileTrajectoryProps) => {

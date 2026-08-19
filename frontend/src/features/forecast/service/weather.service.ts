@@ -8,6 +8,7 @@ import {
 } from "../types/weather.types";
 
 
+/** DYNAMIC: GET /api/weather-data. No mock weather series. */
 class WeatherService {
 
   private readonly baseUrl = "/api";

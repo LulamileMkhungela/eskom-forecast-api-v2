@@ -70,6 +70,11 @@ interface WeatherEntity {
 }
 
 
+/**
+ * DYNAMIC: GET /api/weather-data?entity_id= (Open-Meteo cache via weather.service).
+ * Current Conditions numbers (temp, rainfall, humidity, wind, UV, sunshine) are live.
+ * Title/labels hardcoded. entityId in subtitle is ForecastContext (must be a real station).
+ */
 const WeatherIntelligence = ({
   entityId: propEntityId,
 }: WeatherIntelligenceProps) => {

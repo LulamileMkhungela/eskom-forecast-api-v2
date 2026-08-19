@@ -7,6 +7,51 @@
 
 ---
 
+## YOUR SCREEN — each visible string (Forecast page)
+
+This matches the UI dump you sent. Service: `forecast.service.ts` + `weather.service.ts`.  
+Response shape: `{ daily: ForecastRecord[], monthly: ForecastRecord[] }` plus weather day records.
+
+| What you see | Hardcoded vs live | API / service | Why your screenshot looks like that |
+|---|---|---|---|
+| **Forecast Context** title | Hardcoded label | none | UI copy |
+| **Horizon** | Options hardcoded (Daily/Monthly). Value is state | none | Filter only |
+| **Metric** | Options hardcoded (Burn/Supply/Stockpile). Value is state | none | Maps to Input / Replenishment / Stockpile |
+| **Power Station** | **Live list** from unique `entity_id` | `GET /api/scenario-data` via `getEntities()` | Fleet proves Gold has Lethabo, Matimba, … |
+| **Scenario** | Options hardcoded, mapped to `actual` / `weather_hot_*` | filters scenario-data | Baseline = `actual` |
+| **Average Forecast 0.00 t/day** | **Live formula**, empty series | `getStatistics` → scenario-data | Filter was **`entity_1`**. No parquet rows → mean of [] = 0 |
+| **Peak Forecast 0.00 t/day** | Live max | same | same empty filter |
+| **Projected Volume 0.00 tonnes** | Live sum | same | same |
+| **Forecast Horizon Current entity_1 … 0.00 Days** | Live count + **hardcoded default id** | same | Subtitle interpolates `entityId`. Count 0 because no rows. Default was `"entity_1"` (now cleared in context) |
+| **Forecast data unavailable** | Live empty state | `useForecastChart` | No `Input` rows for `entity_1` |
+| **Scenario Comparison / Baseline vs Actual / not enough data** | Live empty state | `GET /api/scenario-data` | Same missing `entity_1` rows |
+| **Weather Intelligence / Conditions for entity_1** | Title hardcoded; **station name is context** | `GET /api/weather-data?entity_id=` | Weather cache still returns days even for a bad id (backend may fall back). **25.0 °C, Clear sky, High/Low, Rain 0.0, Cloud 1%, Humidity 43%, Wind 13.5, UV 7.5, Sunshine 11.5** are **live Open-Meteo fields**, not mock |
+| **Stockpile Trajectory** copy + unit toggle | Copy + toggle hardcoded | none | UI |
+| **Unable to load station information** | Live error path | `useForecastEntities` failed **or** id not in list | `entitiesError` caption |
+| **No stockpile forecast data…** | Live empty | scenario-data `Stockpile` | No rows for `entity_1` |
+| **Forecast Insights Peak Burn 0 / Peak vs Average +0.0% / Lowest Stockpile 0 / Risk 0 / narrative 0 t/day / operating normally** | **Live zeros** | `useForecastChart` | Empty series → 0, not mock 96.8 |
+| **Station Fleet Lethabo 40.9 t/d … Komati 0.6** | **Live** | scenario-data `actual` only, mean(`Input`) | This is the proof Gold is real. Names are `entity_id`s. Clicking a row sets context |
+| **Weather & Forecast Correlation / 0 matched days / not enough matching…** | Live | scenario-data **plus** weather-data date join | 0 forecast dates for `entity_1` → 0 matches. Explanation text is hardcoded |
+
+**Conclusion from your screen:** Weather + Fleet are pulling backend correctly. KPI/Trend/Scenario/Stockpile/Insights/Correlation are also wired to the backend, but they filtered on **`entity_1`**, which is **not** a Gold station. That is not mock data.
+
+---
+
+## Recommendations (do these next)
+
+1. **Never default to `entity_1`.** Done in `ForecastContext.tsx` (`DEFAULT_ENTITY_ID = ""`). Context bar already assigns the first Gold id. After reload, KPIs should show Lethabo (or first id) numbers, not 0.00.
+2. **Click a Station Fleet row** (e.g. Lethabo) if any card still says `entity_1`.
+3. Confirm Gold has `scenario_id=actual` for that station on the selected horizon.
+4. Delete unused mock files: `ForecastHeader`, `ForecastHistory`, `ForecastTable`, `ForecastFilterBar`, `ModelPerformanceStatistics`, `AccuracyTrend`, `ModelComparison`, `ErrorAnalysis`, `PerformanceHistory`.
+5. Wire ForecastHeader chips only if you remount it: accuracy from `/api/forecast-metrics`, last run from `/api/inference-monitoring/summary`.
+6. Optionally expose `/api/forecast-metrics-by-step` on the matrix (today it uses overall `/api/forecast-metrics`).
+7. Monthly trend still labels **t/day** — change to tonnes when horizon is monthly.
+8. Weather outlook `getWeatherOutlook` slices the **first N records** of the cache (not “next 7 calendar days”). Tighten if outlook looks historical.
+
+---
+
+
+
 ## How live forecast data actually works
 
 1. Frontend `ForecastService` calls **`GET /api/scenario-data`** (`forecast.service.ts`).
@@ -45,7 +90,7 @@ Docs folder (`ARCHITECTURE.md`, `RUNBOOK.md`) describes AKS/SQL/blob topology, n
 ## SECTION 1 — Forecast Context bar
 
 **File:** `frontend/src/components/layout/ForecastContextBar.tsx`  
-**State:** `ForecastContext.tsx` defaults **hardcoded**: `daily`, `burn`, `entity_1`, `actual`.
+**State:** `ForecastContext.tsx` defaults: `daily`, `burn`, **empty station** (was `entity_1`), `actual`.
 
 ### 1.1 Horizon
 
