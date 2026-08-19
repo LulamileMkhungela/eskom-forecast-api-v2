@@ -41,6 +41,7 @@ const formatDateTime = (
   return date.toLocaleString();
 };
 
+/** DYNAMIC: GET /api/inference-monitoring events with status failed/warning. */
 const RecentErrors = ({
   events,
 }: RecentErrorsProps) => {

@@ -42,6 +42,7 @@ import { ForecastFilters } from "../types/forecast.types";
 
 const ROW_GAP = 2.5;
 
+/** LAYOUT: Statistics, TrendChart, ScenarioComparison, Weather, Stockpile, Insights, Fleet, Correlation — all live APIs. */
 const ForecastOverview = () => {
   const { horizon, metric, entityId, scenario } = useForecastContext();
 

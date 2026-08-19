@@ -6,6 +6,7 @@ import RecentForecasts from "./RecentForecasts";
 import StationHealth from "./StationHealth";
 import WeatherSummary from "./WeatherSummary";
 
+/** LAYOUT only. Child cards: DashboardKPIs/StationHealth/WeatherSummary/RecentForecasts mix MOCK + DYNAMIC. DashboardPage is NOT in AppRoutes. */
 const DashboardContent = () => {
   return (
     <Grid

@@ -50,6 +50,7 @@ const WeatherItem = ({
   </Stack>
 );
 
+/** MOCK — 24°C / 18 km/h / 67% / 35%. Live weather is WeatherIntelligence → GET /api/weather-data. */
 const WeatherSummary = () => {
   return (
     <AppCard sx={{ height: "100%" }}>

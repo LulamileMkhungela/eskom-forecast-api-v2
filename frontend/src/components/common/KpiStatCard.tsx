@@ -57,6 +57,7 @@ export interface KpiStatCardProps {
   decimals?: number;
 }
 
+/** PRESENTATION only — renders props. Whether value is live/mock is the parent. */
 const KpiStatCard = ({
   title,
   subtitle,

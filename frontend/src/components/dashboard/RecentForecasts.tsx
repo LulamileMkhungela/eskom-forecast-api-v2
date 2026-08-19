@@ -37,6 +37,7 @@ import {
  * ==========================================================
  */
 
+/** DYNAMIC table rows from forecastService (scenario-data). Column headers hardcoded. */
 const columns: Column<ForecastRecord>[] = [
   {
     field: "entity_id",

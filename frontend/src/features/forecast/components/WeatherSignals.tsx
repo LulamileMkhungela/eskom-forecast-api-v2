@@ -36,6 +36,7 @@ interface WeatherSignalsProps {
 }
 
 
+/** DYNAMIC: useWeatherSignals → GET /api/weather-data then client averages. */
 const WeatherSignals = ({
   entityId,
   days = 7,

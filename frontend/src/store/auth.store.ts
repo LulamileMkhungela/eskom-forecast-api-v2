@@ -18,6 +18,7 @@ interface AuthState {
   setLoading: (loading: boolean) => void;
 }
 
+/** Client session only. login() hits POST /auth/login (not a forecast API). */
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
 

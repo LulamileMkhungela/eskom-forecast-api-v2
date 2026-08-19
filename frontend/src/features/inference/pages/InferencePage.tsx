@@ -10,6 +10,7 @@ import InferenceHistory from "../components/InferenceHistory";
 import ErrorMonitor from "../components/ErrorMonitor";
 
 
+/** ROUTE /inference. Children InferenceStatistics/Pipeline/ApiMetrics/History/ErrorMonitor are MOCK. Use /inference-monitoring for live ops. */
 const InferencePage = () => {
 
   return (

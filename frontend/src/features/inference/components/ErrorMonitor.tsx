@@ -38,6 +38,7 @@ interface SystemError {
 
 
 
+/* MOCK errors. Live: GET /api/inference-monitoring events. */
 const errors:SystemError[] = [
 
   {

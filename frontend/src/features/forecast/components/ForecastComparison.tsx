@@ -29,6 +29,7 @@ interface ComparisonPoint {
   forecast: number;
 }
 
+/** DYNAMIC: forecastService.getForecastChart → GET /api/scenario-data. */
 const ForecastComparison = () => {
   const {
     horizon,

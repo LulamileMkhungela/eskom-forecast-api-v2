@@ -32,6 +32,7 @@ import { ForecastRecord } from "../../features/forecast/types/forecast.types";
 
 type TimeRange = "7" | "30" | "90";
 
+/** DYNAMIC chart via forecastService + ForecastMetrics. Time-range 7/30/90 is local UI. */
 const ForecastSummary = () => {
   const theme = useTheme();
 

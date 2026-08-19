@@ -40,6 +40,7 @@ interface PipelineStep {
 
 
 
+/* MOCK pipeline steps (1.2 sec, 10:30, …). Not monitoring events. */
 const pipeline: PipelineStep[] = [
 
   {

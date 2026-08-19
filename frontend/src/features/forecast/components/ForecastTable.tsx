@@ -67,6 +67,7 @@ const rows: ForecastResult[] = [
 
 
 
+/** MOCK / UNUSED — hardcoded rows (e.g. Arnot). Not on ForecastOverview. */
 const ForecastTable = () => {
 
 

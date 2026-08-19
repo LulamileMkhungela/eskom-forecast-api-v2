@@ -13,6 +13,7 @@ import {
 import StatCard from "../../../components/common/StatCard";
 
 
+/** MOCK — Healthy / Running / Available / 10 min. Live health: GET /api/inference-monitoring/summary. */
 const InferenceStatistics = () => {
 
 

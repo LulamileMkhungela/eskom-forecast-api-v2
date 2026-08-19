@@ -171,6 +171,7 @@ const formatDateTime = (
   return date.toLocaleString();
 };
 
+/** DYNAMIC: summary.resources from GET /api/inference-monitoring/summary. */
 const ResourceHealth = ({
   resources,
 }: ResourceHealthProps) => {

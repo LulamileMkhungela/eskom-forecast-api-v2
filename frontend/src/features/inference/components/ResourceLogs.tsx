@@ -42,6 +42,7 @@ interface ResourceLog {
 
 
 
+/* MOCK resource logs. Live resource table is Inference Monitoring. */
 const logs: ResourceLog[] = [
 
   {

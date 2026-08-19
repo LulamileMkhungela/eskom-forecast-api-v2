@@ -115,6 +115,7 @@ const MetricCard = ({
   );
 };
 
+/** DYNAMIC props from GET /api/inference-monitoring/summary (runs, failures, health). */
 const MonitoringSummary = ({
   summary,
 }: MonitoringSummaryProps) => {

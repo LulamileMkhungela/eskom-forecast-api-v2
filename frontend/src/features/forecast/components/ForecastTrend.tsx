@@ -29,6 +29,7 @@ import { ForecastRecord } from "../types/forecast.types";
 
 
 
+/** DYNAMIC: forecastService records (scenario-data). Average/Peak computed client-side. */
 const ForecastTrend = () => {
   const {
     horizon,

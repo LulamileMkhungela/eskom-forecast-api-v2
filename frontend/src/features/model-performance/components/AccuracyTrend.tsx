@@ -24,6 +24,7 @@ import AppCard from "../../../components/common/AppCard";
 import CardHeader from "../../../components/common/CardHeader";
 
 
+/* MOCK monthly accuracy (96.8…). UNUSED. Live metrics: GET /api/forecast-metrics. */
 const data = [
   {
     month: "Jan",

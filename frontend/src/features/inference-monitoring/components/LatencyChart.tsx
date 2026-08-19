@@ -72,6 +72,7 @@ const formatDate = (
   );
 };
 
+/** DYNAMIC: run.duration_ms from GET /api/inference-monitoring/summary. */
 const LatencyChart = ({
   runs,
 }: LatencyChartProps) => {

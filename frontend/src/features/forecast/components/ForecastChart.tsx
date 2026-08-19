@@ -27,6 +27,7 @@ interface ChartPoint {
   actual: number;
 }
 
+/** DYNAMIC: forecastService.getForecastChart → GET /api/scenario-data. Unused if Overview uses ForecastTrendChart. */
 const ForecastChart = () => {
   const theme = useTheme();
 

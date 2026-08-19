@@ -41,6 +41,7 @@ import {
  * The context bar becomes compact while scrolling.
  */
 
+/** ROUTE /forecast. Context bar + ForecastOverview. Data via ForecastContext + scenario-data. */
 const ForecastPage = () => {
 
   const {

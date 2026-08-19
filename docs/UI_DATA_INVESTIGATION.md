@@ -319,14 +319,65 @@ Horizon filter uses backend values **`tactical` / `strategic`**, not `daily` / `
 
 ---
 
+## SYSTEM-WIDE FILE INVENTORY (every frontend module)
+
+Routed pages: `/forecast`, `/model-performance`, `/inference`, `/inference-monitoring`, `/login`. `/` redirects to Forecast. **DashboardPage is not routed.**
+
+### Presentation only (no data source)
+
+`KpiStatCard`, `StatCard`, `AppCard`, `PanelCard`, `CardHeader`, `DataTable`, `FilterBar`, `EmptyState`, `LoadingOverlay`, `AnimatedNumber`, `MetricSparkline`, `StatusChip`, `StatusPill`, `ViewSwitcher`, `PageContainer`, `PageSection`, `SectionHeader`, `IconContainer`, `CardFilters`, layouts, theme, types.
+
+### Forecast (feature) — comments in each file
+
+| File | Verdict | API |
+|---|---|---|
+| ForecastPage / Overview | Layout | children |
+| ForecastContextBar | Mix: menus hardcoded, stations live | scenario-data entity_id |
+| ForecastStatistics | DYNAMIC | scenario-data aggregates |
+| ForecastTrendChart | DYNAMIC | scenario-data Input/Replenishment |
+| ScenarioComparison / ScenarioTrendChart | DYNAMIC | scenario-data actual vs scenario |
+| ForecastInsights | DYNAMIC | scenario-data |
+| StockpileTrajectory | DYNAMIC | scenario-data Stockpile |
+| StationFleetOverview | DYNAMIC | scenario-data actual means |
+| WeatherIntelligence / Summary / Outlook / Signals | DYNAMIC | weather-data |
+| WeatherCorrelation | DYNAMIC | scenario-data + weather-data |
+| ExportForecast / ForecastResults / ForecastChart / ForecastComparison / ForecastTrend | DYNAMIC | scenario-data |
+| ForecastHeader / History / Table | **MOCK unused** | none |
+| ForecastFilterBar | unused; stations live if mounted | scenario-data |
+
+### Model Performance
+
+| File | Verdict | API |
+|---|---|---|
+| ModelPerformancePage | routed | children |
+| ModelPerformanceKPIs | DYNAMIC RMSE/MAE/NRMSE/R² | forecast-metrics |
+| OotPerformanceChart | DYNAMIC Actual/Predicted | oot-history |
+| CumulativeBurnHistory | DYNAMIC cumulative | oot-history |
+| ModelAccuracyMatrix | DYNAMIC table | forecast-metrics (not by-step) |
+| ModelPerformanceStatistics / AccuracyTrend / ModelComparison / ErrorAnalysis / PerformanceHistory | **MOCK unused** | none |
+| PowerStationsPage | placeholder unused | none |
+
+### Inference (legacy page `/inference`) — **all MOCK**
+
+InferenceStatistics, PipelineStatus, ResourceLogs, ApiMetrics, InferenceHistory, ErrorMonitor.
+
+### Inference Monitoring (`/inference-monitoring`) — **all DYNAMIC**
+
+MonitoringSummary, LatencyChart, ResourceHealth, InferenceActivity, RecentErrors, ResourceActivityTable, RunForecastButton (POST run-forecast).
+
+### Dashboard (not routed)
+
+DashboardKPIs, StationHealth, WeatherSummary (dashboard) = **MOCK**. ForecastMetrics / ForecastTrend / ForecastSummary / RecentForecasts / StationStatus = **DYNAMIC** if ever mounted.
+
+### Services / hooks
+
+`forecast.service.ts`, `weather.service.ts`, `useForecast`, `useWeather`, `model-performance.service.ts`, `useModelPerformance`, `inference-monitoring.service.ts`, `useInferenceMonitoring` = **DYNAMIC**. `auth.service` → POST `/auth/login` (auth only).
+
+---
+
 ## Code comments added
 
-`DYNAMIC` / `MOCK` / `DATA SOURCE` notes are on:
-
-- `forecast.service.ts`, `ForecastContext.tsx`, `ForecastContextBar.tsx`
-- `ForecastStatistics.tsx`, `ForecastTrendChart.tsx`, `ScenarioComparison.tsx`, `ForecastInsights.tsx`
-- `ForecastMetrics.tsx`, `DashboardKPIs.tsx`, `ForecastHeader.tsx`, `StationFleetOverview.tsx`
-- `model-performance.service.ts`, `ModelPerformanceKPIs.tsx`, `OotPerformanceChart.tsx`, `CumulativeBurnHistory.tsx`, `ModelAccuracyMatrix.tsx`, `ModelPerformanceStatistics.tsx`
+`DYNAMIC` / `MOCK` / `DATA SOURCE` comments are on **every data-bearing component** listed in the system inventory (Forecast, Model Performance, Inference, Inference Monitoring, Dashboard, services, hooks). Presentation-only common/theme files have no series to tag.
 
 ---
 

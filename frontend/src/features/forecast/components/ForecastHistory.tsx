@@ -75,6 +75,7 @@ const history: ForecastRun[] = [
 ];
 
 
+/** MOCK / UNUSED — Kendal/Matimba demo runs. Not imported by ForecastPage. */
 const ForecastHistory = () => {
   return (
     <Paper

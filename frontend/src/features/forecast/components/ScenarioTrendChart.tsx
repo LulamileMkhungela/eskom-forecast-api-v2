@@ -38,6 +38,7 @@ import {
   softBorder,
 } from "../../../theme/surfaces";
 
+/** DYNAMIC: useForecastScenarioData → GET /api/scenario-data. Baseline vs selected scenario. Duplicate of ScenarioComparison. */
 interface ScenarioTrendChartProps {
   filters: ForecastFilters;
 }

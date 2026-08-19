@@ -64,6 +64,7 @@ export interface InferenceMonitoringResponse {
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "";
 
+/** DYNAMIC HTTP: GET /api/inference-monitoring/summary and /api/inference-monitoring. */
 export const inferenceMonitoringService = {
   async getSummary(): Promise<InferenceMonitoringSummary> {
     const response = await axios.get<InferenceMonitoringSummary>(

@@ -28,6 +28,7 @@ import {
   neutralFill,
 } from "../../../theme/surfaces";
 
+/** DYNAMIC table: useForecastChart → GET /api/scenario-data. Status chips from Stockpile sign. */
 interface ForecastResultsProps {
   filters: ForecastFilters;
 }

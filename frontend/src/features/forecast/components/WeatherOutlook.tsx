@@ -27,6 +27,7 @@ import {
 
 import axios from "axios";
 
+/** DYNAMIC: GET /api/weather-data (axios in this file). Outlook series is live cache, not mock. */
 import {
   WeatherRecord,
 } from "../types/weather.types";

@@ -105,6 +105,7 @@ const getStatusIcon = (
   }
 };
 
+/** DYNAMIC: RESOURCE_ACTIVITY events from GET /api/inference-monitoring. */
 const ResourceActivityTable = ({
   events,
 }: ResourceActivityTableProps) => {

@@ -37,6 +37,7 @@ import {
  * - Stockpile
  */
 
+/** DYNAMIC CSV of current useForecastChart rows (scenario-data). Not mock. */
 interface ExportForecastProps {
   filters: ForecastFilters;
 }

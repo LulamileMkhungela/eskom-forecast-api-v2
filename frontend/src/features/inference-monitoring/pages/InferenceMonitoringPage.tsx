@@ -21,6 +21,7 @@ import RecentErrors from "../components/RecentErrors";
 import RunForecastButton from "../components/RunForecastButton";
 
 
+/** ROUTE /inference-monitoring. DYNAMIC GET /api/inference-monitoring + /summary. POST run-forecast. */
 const InferenceMonitoringPage = () => {
   const {
     summary,

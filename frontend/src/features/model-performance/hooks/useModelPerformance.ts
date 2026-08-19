@@ -5,6 +5,7 @@ import {
 import modelPerformanceService from "../service/model-performance.service";
 
 
+/** DYNAMIC: GET /api/forecast-metrics and GET /api/oot-history. */
 export const useModelMetrics = () => {
   return useQuery({
     queryKey: [

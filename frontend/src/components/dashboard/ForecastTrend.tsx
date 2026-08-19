@@ -31,6 +31,7 @@ import {
 
 type TimeRange = "7" | "30" | "90";
 
+/** DYNAMIC: useForecastChart → GET /api/scenario-data. Range toggle 7/30/90 is client slice. */
 const ForecastTrend = () => {
   const theme = useTheme();
 

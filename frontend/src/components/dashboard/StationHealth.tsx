@@ -44,6 +44,7 @@ const Metric = ({
   </>
 );
 
+/* MOCK — 47 200 MW, 96.8%, availability 92. Not /api. */
 const metrics: MetricProps[] = [
   {
     label: "Total Capacity",

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import forecastService from "../../features/forecast/service/forecast.service";
 import { ForecastEntity } from "../../features/forecast/types/forecast.types";
 
+/** DYNAMIC station names: forecastService.getEntities() → GET /api/scenario-data entity_id. Status chips may be local. */
 const StationStatus = () => {
   const [stations, setStations] =
     useState<ForecastEntity[]>([]);

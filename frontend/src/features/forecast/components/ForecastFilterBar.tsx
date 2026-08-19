@@ -18,6 +18,7 @@ import { ForecastEntity } from "../types/forecast.types";
  * entities the backend returns (`/api/scenario-data`), the same
  * source the global Forecast Context bar uses.
  */
+/** UNUSED (replaced by ForecastContextBar). Stations DYNAMIC via useForecastEntities; model dropdown is local. */
 const ForecastFilterBar = () => {
   const [station, setStation] = useState("");
   const [model, setModel] = useState("");

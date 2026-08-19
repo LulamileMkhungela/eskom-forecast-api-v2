@@ -25,6 +25,7 @@ import {
   softBorderColor,
 } from "../../../theme/surfaces";
 
+/** DYNAMIC: useWeatherSummary → GET /api/weather-data latest day. Not the dashboard MOCK WeatherSummary. */
 interface WeatherSummaryProps {
   entityId: string;
 }

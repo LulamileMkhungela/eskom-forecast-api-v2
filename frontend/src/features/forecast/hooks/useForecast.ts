@@ -18,6 +18,7 @@ import forecastService from "../service/forecast.service";
  * =====================================================
  */
 
+/** DYNAMIC React Query wrappers around forecastService (GET /api/scenario-data). */
 export const useForecastChart = (
   filters?: ForecastFilters
 ) => {

@@ -3,6 +3,7 @@ import {
   inferenceMonitoringService,
 } from "../service/inference-monitoring.service";
 
+/** DYNAMIC: getSummary + getEvents every 30s. */
 export const useInferenceMonitoring = () => {
   const summaryQuery = useQuery({
     queryKey: ["inference-monitoring", "summary"],

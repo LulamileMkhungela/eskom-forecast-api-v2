@@ -120,6 +120,7 @@ const getStatusChip = (
   }
 };
 
+/** DYNAMIC: summary.runs from GET /api/inference-monitoring/summary. */
 const InferenceActivity = ({
   runs,
 }: InferenceActivityProps) => {
